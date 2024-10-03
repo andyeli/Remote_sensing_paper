@@ -1,0 +1,366 @@
+\relax 
+\providecommand*\new@tpo@label[2]{}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\bibstyle{Definitions/mdpi}
+\citation{Vuolo2018,Pelletier2019,Foerster2012,Chen2022}
+\citation{Hu2016,Palchowdhuri2018,Heupel2018,Li2023,Dong2020,Paris2020,Russwurm2020,Foerster2012,Chen2022}
+\citation{Yin2020,Yi2020,He2022,Dumeur2024,Wang2019}
+\citation{Vuolo2018,Yi2020}
+\citation{Foerster2012}
+\citation{Vuolo2018,Dong2020,Hu2016,Roy2020}
+\newmarginnote{note.1.1}{{1}{10945661sp}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{Feng2019,Kussul2017,Cai2018,ManishLad2022,Inglada2017}
+\citation{Rokach2005}
+\citation{Breiman2001}
+\citation{cortes1995}
+\citation{Rosenblatt1958}
+\citation{ML2023}
+\citation{LopezPinaya2020}
+\citation{LopezFandino2018,Luppino2024,Kalinicheva2019}
+\citation{Swope2021,Bengio2013,Neumann2019,Li2022,Bengio2012,Engelen2019,Ericsson2022}
+\citation{Russwurm2020}
+\citation{Russwurm2020}
+\citation{Paris2020}
+\citation{He2022}
+\citation{Swope2021}
+\citation{Yuan2022}
+\citation{Lisaius2024}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Related work}{2}{subsection.1.1}\protected@file@percent }
+\citation{Kalinicheva2019}
+\citation{Windrim2019}
+\citation{Begue2018,Orynbaikyzy2019,Kussul2017}
+\citation{PierrePott2022,Heupel2018,MorenoMartinez2020}
+\citation{Russwurm2020,Kandasamy2013}
+\citation{Kalinicheva2019}
+\citation{Windrim2019}
+\citation{Paris2020}
+\citation{Russwurm2020}
+\citation{Yi2020}
+\citation{He2022}
+\citation{Yin2020}
+\citation{Lisaius2024}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Summary of relevant works related to crop types classification and representation learning.}}{3}{table.caption.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Contributions}{3}{subsection.1.2}\protected@file@percent }
+\citation{Tzelepi2022}
+\citation{Balestriero2023}
+\citation{Tschannen2019,LeKhac2020,Aitchison2021}
+\citation{Chen2020,Bachman2019}
+\citation{Dwibedi2021}
+\citation{Bardes2021}
+\citation{Zbontar2021,Lisaius2024}
+\citation{Coifman2006}
+\citation{Bank2020}
+\citation{Tzelepi2022,Zhang2019}
+\citation{Valero2021}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Materials and Methods}{4}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Representation Learning}{4}{subsection.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Illustration of RL as a function $f$, mapping vectors from a dimensional space to a representation space.}}{4}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{}{{1}{4}{Illustration of RL as a function $f$, mapping vectors from a dimensional space to a representation space}{figure.caption.2}{}}
+\newlabel{@cref}{{[figure][1][]1}{[1][4][]4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Autoencoders}{4}{subsection.2.2}\protected@file@percent }
+\newlabel{aes}{{2.2}{4}{Autoencoders}{subsection.2.2}{}}
+\newlabel{aes@cref}{{[subsection][2][2]2.2}{[1][4][]4}}
+\citation{Baldi2012}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Example of an AE architecture with mathematical definition as a function. In the present work, not the codes are used as representations, but the recostruction difference between input and output.}}{5}{figure.caption.3}\protected@file@percent }
+\newlabel{AEs_example}{{2}{5}{Example of an AE architecture with mathematical definition as a function. In the present work, not the codes are used as representations, but the recostruction difference between input and output}{figure.caption.3}{}}
+\newlabel{AEs_example@cref}{{[figure][2][]2}{[1][4][]5}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem statement and proposed method}{5}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Mathematical formulation}{5}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces First level proposed workflow. Scene classification product provided by the European Space Agency (ESA) is used to mask out cloudy samples from a geographic point (pixel) shaped as a $T \times B$ array. The pixel cloud free observations are the inputs to generate a representations vector, which is a concatenation of the reconstruction differences per AE, and are then the input data to a classification model.}}{5}{figure.caption.4}\protected@file@percent }
+\newlabel{bigpicture}{{3}{5}{First level proposed workflow. Scene classification product provided by the European Space Agency (ESA) is used to mask out cloudy samples from a geographic point (pixel) shaped as a $T \times B$ array. The pixel cloud free observations are the inputs to generate a representations vector, which is a concatenation of the reconstruction differences per AE, and are then the input data to a classification model}{figure.caption.4}{}}
+\newlabel{bigpicture@cref}{{[figure][3][]3}{[1][5][]5}}
+\citation{Russwurm2020}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Methodology}{6}{subsection.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Proposed framework block diagram. The full methodology is composed by four main blocks: data preprocessing, model training, representation generation and evaluation.}}{6}{figure.caption.5}\protected@file@percent }
+\newlabel{abstract}{{4}{6}{Proposed framework block diagram. The full methodology is composed by four main blocks: data preprocessing, model training, representation generation and evaluation}{figure.caption.5}{}}
+\newlabel{abstract@cref}{{[figure][4][]4}{[1][5][]6}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Data downloading/preprocessing}{6}{subsubsection.3.2.1}\protected@file@percent }
+\newlabel{data_preprocessing}{{3.2.1}{6}{Data downloading/preprocessing}{subsubsection.3.2.1}{}}
+\newlabel{data_preprocessing@cref}{{[subsubsection][1][3,2]3.2.1}{[1][6][]6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Process of downloading datasets using the GEE API.}}{6}{figure.caption.6}\protected@file@percent }
+\newlabel{GEE_process}{{5}{6}{Process of downloading datasets using the GEE API}{figure.caption.6}{}}
+\newlabel{GEE_process@cref}{{[figure][5][]5}{[1][6][]6}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Model training}{7}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Example of the expected output for positive and negative samples. The "errors" from the ensemble of AEs constitute the representations for the downstream task.}}{7}{figure.caption.7}\protected@file@percent }
+\newlabel{errors}{{6}{7}{Example of the expected output for positive and negative samples. The "errors" from the ensemble of AEs constitute the representations for the downstream task}{figure.caption.7}{}}
+\newlabel{errors@cref}{{[figure][6][]6}{[1][7][]7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces AEs training. Each AE is trained with a set of individual spectral curves belonging to one of the crop types. The reconstructions from the $C$ classes are used to calculate the difference vector across the ensemble, that is the final set of representations.}}{7}{figure.caption.8}\protected@file@percent }
+\newlabel{aes_train}{{7}{7}{AEs training. Each AE is trained with a set of individual spectral curves belonging to one of the crop types. The reconstructions from the $C$ classes are used to calculate the difference vector across the ensemble, that is the final set of representations}{figure.caption.8}{}}
+\newlabel{aes_train@cref}{{[figure][7][]7}{[1][7][]7}}
+\newlabel{composed}{{4}{7}{Model training}{equation.3.4}{}}
+\newlabel{composed@cref}{{[equation][4][]4}{[1][7][]7}}
+\newlabel{loss}{{7}{8}{Model training}{equation.3.7}{}}
+\newlabel{loss@cref}{{[equation][7][]7}{[1][8][]8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Inference (representations formation)}{8}{subsubsection.3.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Inference workflow of the proposed framework. For each temporal set of cloud-free reflectance spectra, the average reconstruction errors are calculated for each of the $C$ AEs and concatenated to define the representations of this pixel.}}{8}{figure.caption.9}\protected@file@percent }
+\newlabel{Inference}{{8}{8}{Inference workflow of the proposed framework. For each temporal set of cloud-free reflectance spectra, the average reconstruction errors are calculated for each of the $C$ AEs and concatenated to define the representations of this pixel}{figure.caption.9}{}}
+\newlabel{Inference@cref}{{[figure][8][]8}{[1][8][]8}}
+\citation{Russwurm2020}
+\citation{Russwurm2020}
+\citation{Russwurm2020}
+\citation{Foody2002}
+\citation{Russwurm2020}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{9}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Dataset}{9}{subsection.4.1}\protected@file@percent }
+\newlabel{dataset}{{4.1}{9}{Dataset}{subsection.4.1}{}}
+\newlabel{dataset@cref}{{[subsection][1][4]4.1}{[1][9][]9}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Regions of Britany (France) with number of field parcels and spectral data for the atmospherically corrected surface reflectances at the bottom-of-atmosphere (L2A) \cite  {Russwurm2020}. The regions FRH01 and FRH02 were used for training, FRH03 for validation, and FRH04 for evaluation.}}{9}{table.caption.10}\protected@file@percent }
+\newlabel{Regions}{{2}{9}{Regions of Britany (France) with number of field parcels and spectral data for the atmospherically corrected surface reflectances at the bottom-of-atmosphere (L2A) \cite {Russwurm2020}. The regions FRH01 and FRH02 were used for training, FRH03 for validation, and FRH04 for evaluation}{table.caption.10}{}}
+\newlabel{Regions@cref}{{[table][2][]2}{[1][9][]9}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Number of samples per class used for training, validation and test.}}{9}{table.caption.11}\protected@file@percent }
+\newlabel{samples}{{3}{9}{Number of samples per class used for training, validation and test}{table.caption.11}{}}
+\newlabel{samples@cref}{{[table][3][]3}{[1][9][]9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}AEs training.}{9}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Dataset split.}}{10}{table.caption.12}\protected@file@percent }
+\newlabel{data_split}{{4}{10}{Dataset split}{table.caption.12}{}}
+\newlabel{data_split@cref}{{[table][4][]4}{[1][10][]10}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Setting up of the AEs hyperparameters.}}{10}{table.caption.13}\protected@file@percent }
+\newlabel{hyperparameters_aes}{{5}{10}{Setting up of the AEs hyperparameters}{table.caption.13}{}}
+\newlabel{hyperparameters_aes@cref}{{[table][5][]5}{[1][10][]10}}
+\newlabel{fig:loss_barley}{{9a}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_barley@cref}{{[subfigure][1][9]9a}{[1][10][]10}}
+\newlabel{sub@fig:loss_barley}{{a}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_barley@cref}{{[subfigure][1][9]9a}{[1][10][]10}}
+\newlabel{fig:loss_corn}{{9b}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_corn@cref}{{[subfigure][2][9]9b}{[1][10][]10}}
+\newlabel{sub@fig:loss_corn}{{b}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_corn@cref}{{[subfigure][2][9]9b}{[1][10][]10}}
+\newlabel{fig:loss_nuts}{{9c}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_nuts@cref}{{[subfigure][3][9]9c}{[1][10][]10}}
+\newlabel{sub@fig:loss_nuts}{{c}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_nuts@cref}{{[subfigure][3][9]9c}{[1][10][]10}}
+\newlabel{fig:loss_rapeseed}{{9d}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_rapeseed@cref}{{[subfigure][4][9]9d}{[1][10][]10}}
+\newlabel{sub@fig:loss_rapeseed}{{d}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_rapeseed@cref}{{[subfigure][4][9]9d}{[1][10][]10}}
+\newlabel{fig:loss_pm}{{9e}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_pm@cref}{{[subfigure][5][9]9e}{[1][10][]10}}
+\newlabel{sub@fig:loss_pm}{{e}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_pm@cref}{{[subfigure][5][9]9e}{[1][10][]10}}
+\newlabel{fig:loss_tm}{{9f}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_tm@cref}{{[subfigure][6][9]9f}{[1][10][]10}}
+\newlabel{sub@fig:loss_tm}{{f}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_tm@cref}{{[subfigure][6][9]9f}{[1][10][]10}}
+\newlabel{fig:loss_sunflower}{{9g}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_sunflower@cref}{{[subfigure][7][9]9g}{[1][10][]10}}
+\newlabel{sub@fig:loss_sunflower}{{g}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_sunflower@cref}{{[subfigure][7][9]9g}{[1][10][]10}}
+\newlabel{fig:loss_orchards}{{9h}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_orchards@cref}{{[subfigure][8][9]9h}{[1][10][]10}}
+\newlabel{sub@fig:loss_orchards}{{h}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_orchards@cref}{{[subfigure][8][9]9h}{[1][10][]10}}
+\newlabel{fig:loss_wheat}{{9i}{10}{\relax }{figure.caption.14}{}}
+\newlabel{fig:loss_wheat@cref}{{[subfigure][9][9]9i}{[1][10][]10}}
+\newlabel{sub@fig:loss_wheat}{{i}{10}{\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:loss_wheat@cref}{{[subfigure][9][9]9i}{[1][10][]10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Loss functions of AEs trained with (a) barley, (b) corn, (c) nuts, (d) rapeseed, (e) permanent meadows, (f) temporary meadows, (g) sunflower (h) orchards and (i) wheat samples.}}{10}{figure.caption.14}\protected@file@percent }
+\newlabel{loss_fuctions}{{9}{10}{Loss functions of AEs trained with (a) barley, (b) corn, (c) nuts, (d) rapeseed, (e) permanent meadows, (f) temporary meadows, (g) sunflower (h) orchards and (i) wheat samples}{figure.caption.14}{}}
+\newlabel{loss_fuctions@cref}{{[figure][9][]9}{[1][10][]10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Separabilty assessment and distance metrics}{11}{subsection.4.3}\protected@file@percent }
+\newlabel{fig:pca_raw}{{10a}{11}{\relax }{figure.caption.15}{}}
+\newlabel{fig:pca_raw@cref}{{[subfigure][1][10]10a}{[1][11][]11}}
+\newlabel{sub@fig:pca_raw}{{a}{11}{\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:pca_raw@cref}{{[subfigure][1][10]10a}{[1][11][]11}}
+\newlabel{fig:pca_rep}{{10b}{11}{\relax }{figure.caption.15}{}}
+\newlabel{fig:pca_rep@cref}{{[subfigure][2][10]10b}{[1][11][]11}}
+\newlabel{sub@fig:pca_rep}{{b}{11}{\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:pca_rep@cref}{{[subfigure][2][10]10b}{[1][11][]11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces 3D-scatterplot of (a) S2 BOA fixed-length time series (45 observations) and (b) representation, over three principal components obtained by PCA.}}{11}{figure.caption.15}\protected@file@percent }
+\newlabel{fcn_losses}{{10}{11}{3D-scatterplot of (a) S2 BOA fixed-length time series (45 observations) and (b) representation, over three principal components obtained by PCA}{figure.caption.15}{}}
+\newlabel{fcn_losses@cref}{{[figure][10][]10}{[1][11][]11}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Class distance assessment of the input S2 optical dataset and the representations produced by the proposed method. $SS$ ranges from -1 for incorrect clustering and +1 for highly dense clustering. $CH$ larger scores indicates better separability. $DBI$ ranges from 0 to $\infty $ and the closer to zero the better partition.}}{11}{table.caption.16}\protected@file@percent }
+\newlabel{distance_metrics_results}{{6}{11}{Class distance assessment of the input S2 optical dataset and the representations produced by the proposed method. $SS$ ranges from -1 for incorrect clustering and +1 for highly dense clustering. $CH$ larger scores indicates better separability. $DBI$ ranges from 0 to $\infty $ and the closer to zero the better partition}{table.caption.16}{}}
+\newlabel{distance_metrics_results@cref}{{[table][6][]6}{[1][11][]11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Evaluating representations in the classification of crop types}{11}{subsection.4.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Classification model hyperparameters. $B$ denotes the number of bands, and $C$ the number of AEs. Note that only 5 additional features (the spectral vegetation indices) are added to the spectral bands, since DOY features are excluded from the representations in the training of the classification model.}}{12}{table.caption.17}\protected@file@percent }
+\newlabel{fcn_hyperparameters}{{7}{12}{Classification model hyperparameters. $B$ denotes the number of bands, and $C$ the number of AEs. Note that only 5 additional features (the spectral vegetation indices) are added to the spectral bands, since DOY features are excluded from the representations in the training of the classification model}{table.caption.17}{}}
+\newlabel{fcn_hyperparameters@cref}{{[table][7][]7}{[1][11][]12}}
+\newlabel{fig:fcn_loss}{{11a}{12}{\relax }{figure.caption.18}{}}
+\newlabel{fig:fcn_loss@cref}{{[subfigure][1][11]11a}{[1][12][]12}}
+\newlabel{sub@fig:fcn_loss}{{a}{12}{\relax }{figure.caption.18}{}}
+\newlabel{sub@fig:fcn_loss@cref}{{[subfigure][1][11]11a}{[1][12][]12}}
+\newlabel{fig:fcn_accuracy}{{11b}{12}{\relax }{figure.caption.18}{}}
+\newlabel{fig:fcn_accuracy@cref}{{[subfigure][2][11]11b}{[1][12][]12}}
+\newlabel{sub@fig:fcn_accuracy}{{b}{12}{\relax }{figure.caption.18}{}}
+\newlabel{sub@fig:fcn_accuracy@cref}{{[subfigure][2][11]11b}{[1][12][]12}}
+\newlabel{fig:fcn_mcc}{{11c}{12}{\relax }{figure.caption.18}{}}
+\newlabel{fig:fcn_mcc@cref}{{[subfigure][3][11]11c}{[1][12][]12}}
+\newlabel{sub@fig:fcn_mcc}{{c}{12}{\relax }{figure.caption.18}{}}
+\newlabel{sub@fig:fcn_mcc@cref}{{[subfigure][3][11]11c}{[1][12][]12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces FCN training and validation (a) MAE (b) OA and (c) MCC functions over epochs.}}{12}{figure.caption.18}\protected@file@percent }
+\newlabel{fcn_losses}{{11}{12}{FCN training and validation (a) MAE (b) OA and (c) MCC functions over epochs}{figure.caption.18}{}}
+\newlabel{fcn_losses@cref}{{[figure][11][]11}{[1][12][]12}}
+\citation{Russwurm2020}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Confusion matrix of the FCN prediction for the testing data.}}{13}{figure.caption.19}\protected@file@percent }
+\newlabel{confusion_matrix}{{12}{13}{Confusion matrix of the FCN prediction for the testing data}{figure.caption.19}{}}
+\newlabel{confusion_matrix@cref}{{[figure][12][]12}{[1][12][]13}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Classification performance evaluation of benchmarked models. All models were evaluated over the same testing dataset.}}{14}{table.caption.20}\protected@file@percent }
+\newlabel{Quantitative_results}{{8}{14}{Classification performance evaluation of benchmarked models. All models were evaluated over the same testing dataset}{table.caption.20}{}}
+\newlabel{Quantitative_results@cref}{{[table][8][]8}{[1][13][]14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Qualitative results}{14}{subsection.4.5}\protected@file@percent }
+\newlabel{fig:gee_img}{{13a}{14}{\relax }{figure.caption.21}{}}
+\newlabel{fig:gee_img@cref}{{[subfigure][1][13]13a}{[1][14][]14}}
+\newlabel{sub@fig:gee_img}{{a}{14}{\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:gee_img@cref}{{[subfigure][1][13]13a}{[1][14][]14}}
+\newlabel{fig:color_map_a}{{13b}{14}{\relax }{figure.caption.21}{}}
+\newlabel{fig:color_map_a@cref}{{[subfigure][2][13]13b}{[1][14][]14}}
+\newlabel{sub@fig:color_map_a}{{b}{14}{\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:color_map_a@cref}{{[subfigure][2][13]13b}{[1][14][]14}}
+\newlabel{fig:color_map_b}{{13c}{14}{\relax }{figure.caption.21}{}}
+\newlabel{fig:color_map_b@cref}{{[subfigure][3][13]13c}{[1][14][]14}}
+\newlabel{sub@fig:color_map_b}{{c}{14}{\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:color_map_b@cref}{{[subfigure][3][13]13c}{[1][14][]14}}
+\newlabel{fig:color_map_c}{{13d}{14}{\relax }{figure.caption.21}{}}
+\newlabel{fig:color_map_c@cref}{{[subfigure][4][13]13d}{[1][14][]14}}
+\newlabel{sub@fig:color_map_c}{{d}{14}{\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:color_map_c@cref}{{[subfigure][4][13]13d}{[1][14][]14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces (a) True color image of the study area in 2017 and false color images combining three random representations per map (b) 59-84-81, (c) 30-11-141, and (d) 45-66-57.}}{14}{figure.caption.21}\protected@file@percent }
+\newlabel{color_maps}{{13}{14}{(a) True color image of the study area in 2017 and false color images combining three random representations per map (b) 59-84-81, (c) 30-11-141, and (d) 45-66-57}{figure.caption.21}{}}
+\newlabel{color_maps@cref}{{[figure][13][]13}{[1][14][]14}}
+\newlabel{fig:r_aes_b2_0}{{14a}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_0@cref}{{[subfigure][1][14]14a}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_0}{{a}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_0@cref}{{[subfigure][1][14]14a}{[1][14][]15}}
+\newlabel{fig:r_aes_b2_1}{{14b}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_1@cref}{{[subfigure][2][14]14b}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_1}{{b}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_1@cref}{{[subfigure][2][14]14b}{[1][14][]15}}
+\newlabel{fig:r_aes_b2_2}{{14c}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_2@cref}{{[subfigure][3][14]14c}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_2}{{c}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_2@cref}{{[subfigure][3][14]14c}{[1][14][]15}}
+\newlabel{fig:r_aes_b2_3}{{14d}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_3@cref}{{[subfigure][4][14]14d}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_3}{{d}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_3@cref}{{[subfigure][4][14]14d}{[1][14][]15}}
+\newlabel{fig:r_aes_b2_4}{{14e}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_4@cref}{{[subfigure][5][14]14e}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_4}{{e}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_4@cref}{{[subfigure][5][14]14e}{[1][14][]15}}
+\newlabel{fig:r_aes_b2_5}{{14f}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_5@cref}{{[subfigure][6][14]14f}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_5}{{f}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_5@cref}{{[subfigure][6][14]14f}{[1][14][]15}}
+\newlabel{fig:r_aes_b2_6}{{14g}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_6@cref}{{[subfigure][7][14]14g}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_6}{{g}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_6@cref}{{[subfigure][7][14]14g}{[1][14][]15}}
+\newlabel{fig:r_aes_b2_7}{{14h}{15}{\relax }{figure.caption.22}{}}
+\newlabel{fig:r_aes_b2_7@cref}{{[subfigure][8][14]14h}{[1][14][]15}}
+\newlabel{sub@fig:r_aes_b2_7}{{h}{15}{\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:r_aes_b2_7@cref}{{[subfigure][8][14]14h}{[1][14][]15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Visualization of a subset of the representation bands produced by our RL AE-based framework. We show here only 8 out of $9 \times 15$ available representations.}}{15}{figure.caption.22}\protected@file@percent }
+\newlabel{representations}{{14}{15}{Visualization of a subset of the representation bands produced by our RL AE-based framework. We show here only 8 out of $9 \times 15$ available representations}{figure.caption.22}{}}
+\newlabel{representations@cref}{{[figure][14][]14}{[1][14][]15}}
+\newlabel{fig:frh04_labels}{{15a}{15}{\relax }{figure.caption.23}{}}
+\newlabel{fig:frh04_labels@cref}{{[subfigure][1][15]15a}{[1][15][]15}}
+\newlabel{sub@fig:frh04_labels}{{a}{15}{\relax }{figure.caption.23}{}}
+\newlabel{sub@fig:frh04_labels@cref}{{[subfigure][1][15]15a}{[1][15][]15}}
+\newlabel{fig:classification_map}{{15b}{15}{\relax }{figure.caption.23}{}}
+\newlabel{fig:classification_map@cref}{{[subfigure][2][15]15b}{[1][15][]15}}
+\newlabel{sub@fig:classification_map}{{b}{15}{\relax }{figure.caption.23}{}}
+\newlabel{sub@fig:classification_map@cref}{{[subfigure][2][15]15b}{[1][15][]15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces (a) Study area ground truth at field level (polygons) and (b) representations-based FCN pixel-wise classification (raster).}}{15}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:maps}{{15}{15}{(a) Study area ground truth at field level (polygons) and (b) representations-based FCN pixel-wise classification (raster)}{figure.caption.23}{}}
+\newlabel{fig:maps@cref}{{[figure][15][]15}{[1][15][]15}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{15}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{16}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Open Issues}{16}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Appendix~A}{17}{appendix.A.}\protected@file@percent }
+\newlabel{app_a}{{A}{17}{\appendixname ~\thesection }{appendix.A.}{}}
+\newlabel{app_a@cref}{{[appendix][1][2147483647]A}{[1][17][]17}}
+\citation{Russwurm2020}
+\@writefile{lof}{\contentsline {figure}{\numberline {A1}{\ignorespaces Hyperparameters and quality indicators correlation matrix.}}{18}{figure.caption.24}\protected@file@percent }
+\newlabel{correlation_matrix}{{A1}{18}{Hyperparameters and quality indicators correlation matrix}{figure.caption.24}{}}
+\newlabel{correlation_matrix@cref}{{[figure][1][2147483647]A1}{[1][17][]18}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Appendix~B}{18}{appendix.B.}\protected@file@percent }
+\newlabel{app_distance_m}{{B}{18}{\appendixname ~\thesection }{appendix.B.}{}}
+\newlabel{app_distance_m@cref}{{[appendix][2][2147483647]B}{[1][18][]18}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Appendix~C}{18}{appendix.C.}\protected@file@percent }
+\newlabel{distance_m}{{C}{18}{\appendixname ~\thesection }{appendix.C.}{}}
+\newlabel{distance_m@cref}{{[appendix][3][2147483647]C}{[1][18][]18}}
+\bibdata{references}
+\bibcite{Vuolo2018}{{1}{2018}{{Vuolo et~al.}}{{Vuolo, Neuwirth, Immitzer, Atzberger, and Ng}}}
+\bibcite{Pelletier2019}{{2}{2019}{{Pelletier et~al.}}{{Pelletier, Webb, and Petitjean}}}
+\bibcite{Foerster2012}{{3}{2012}{{Foerster et~al.}}{{Foerster, Kaden, Foerster, and Itzerott}}}
+\bibcite{Chen2022}{{4}{2022}{{Chen et~al.}}{{Chen, Zheng, Wang, Hellwich, Chen, Yang, Liu, Luo, Bao, and Chen}}}
+\bibcite{Hu2016}{{5}{2016}{{Hu et~al.}}{{Hu, Wu, Song, Yu, Lu, Yang, Tang, and Long}}}
+\bibcite{Palchowdhuri2018}{{6}{2018}{{Palchowdhuri et~al.}}{{Palchowdhuri, Valcarce-Diñeiro, King, and Sanabria-Soto}}}
+\bibcite{Heupel2018}{{7}{2018}{{Heupel et~al.}}{{Heupel, Spengler, and Itzerott}}}
+\bibcite{Li2023}{{8}{2023}{{Li et~al.}}{{Li, Tian, and Tian}}}
+\bibcite{Dong2020}{{9}{2020}{{Dong et~al.}}{{Dong, Ma, Wu, Zhang, and Jiao}}}
+\newlabel{eqn:OA}{{A5}{19}{\appendixname ~\thesection }{equation.C..5}{}}
+\newlabel{eqn:OA@cref}{{[equation][5][2147483647]A5}{[1][18][]19}}
+\newlabel{eqn:PA_c}{{A6}{19}{\appendixname ~\thesection }{equation.C..6}{}}
+\newlabel{eqn:PA_c@cref}{{[equation][6][2147483647]A6}{[1][19][]19}}
+\newlabel{eqn:AA}{{A7}{19}{\appendixname ~\thesection }{equation.C..7}{}}
+\newlabel{eqn:AA@cref}{{[equation][7][2147483647]A7}{[1][19][]19}}
+\newlabel{eqn:UA_c}{{A8}{19}{\appendixname ~\thesection }{equation.C..8}{}}
+\newlabel{eqn:UA_c@cref}{{[equation][8][2147483647]A8}{[1][19][]19}}
+\newlabel{eqn:F1_c}{{A9}{19}{\appendixname ~\thesection }{equation.C..9}{}}
+\newlabel{eqn:F1_c@cref}{{[equation][9][2147483647]A9}{[1][19][]19}}
+\newlabel{eqn:k}{{A10}{19}{\appendixname ~\thesection }{equation.C..10}{}}
+\newlabel{eqn:k@cref}{{[equation][10][2147483647]A10}{[1][19][]19}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}References}{19}{appendix.D.}\protected@file@percent }
+\bibcite{Paris2020}{{10}{2020}{{Paris et~al.}}{{Paris, Weikmann, and Bruzzone}}}
+\bibcite{Russwurm2020}{{11}{2020}{{Rußwurm et~al.}}{{Rußwurm, Pelletier, Zollner, Lefèvre, and Körner}}}
+\bibcite{Yin2020}{{12}{2020}{{Yin et~al.}}{{Yin, You, Zhang, Huang, and Dong}}}
+\bibcite{Yi2020}{{13}{2020}{{Yi et~al.}}{{Yi, Jia, and Chen}}}
+\bibcite{He2022}{{14}{2022}{{He et~al.}}{{He, Peng, Chen, and Wang}}}
+\bibcite{Dumeur2024}{{15}{2024}{{Dumeur et~al.}}{{Dumeur, Valero, and Inglada}}}
+\bibcite{Wang2019}{{16}{2019}{{Wang et~al.}}{{Wang, Azzari, and Lobell}}}
+\bibcite{Roy2020}{{17}{2020}{{Roy and Yan}}{{}}}
+\bibcite{Feng2019}{{18}{2019}{{Feng et~al.}}{{Feng, Zhao, Liu, Zhang, Zhang, and Guo}}}
+\bibcite{Kussul2017}{{19}{2017}{{Kussul et~al.}}{{Kussul, Lavreniuk, Skakun, and Shelestov}}}
+\bibcite{Cai2018}{{20}{2018}{{Cai et~al.}}{{Cai, Guan, Peng, Wang, Seifert, Wardlow, and Li}}}
+\bibcite{ManishLad2022}{{21}{2022}{{Manish~Lad et~al.}}{{Manish~Lad, Mani~Bharathi, Akash~Saravanan, and Karthik}}}
+\bibcite{Inglada2017}{{22}{2017}{{Inglada et~al.}}{{Inglada, Vincent, Arias, Tardy, Morin, and Rodes}}}
+\bibcite{Rokach2005}{{23}{}{{Rokach and Maimon}}{{}}}
+\bibcite{Breiman2001}{{24}{2001}{{Breiman}}{{}}}
+\bibcite{cortes1995}{{25}{1995}{{Cortes}}{{}}}
+\bibcite{Rosenblatt1958}{{26}{1958}{{Rosenblatt}}{{}}}
+\bibcite{ML2023}{{27}{2023}{{ML2}}{{}}}
+\bibcite{LopezPinaya2020}{{28}{2020}{{Lopez~Pinaya et~al.}}{{Lopez~Pinaya, Vieira, Garcia-Dias, and Mechelli}}}
+\bibcite{LopezFandino2018}{{29}{2018}{{Lopez-Fandino et~al.}}{{Lopez-Fandino, Garea, Heras, and Arguello}}}
+\bibcite{Luppino2024}{{30}{2024}{{Luppino et~al.}}{{Luppino, Hansen, Kampffmeyer, Bianchi, Moser, Jenssen, and Anfinsen}}}
+\bibcite{Kalinicheva2019}{{31}{2019}{{Kalinicheva et~al.}}{{Kalinicheva, Sublime, and Trocan}}}
+\bibcite{Swope2021}{{32}{2021}{{Swope et~al.}}{{Swope, Rudelis, and Story}}}
+\bibcite{Bengio2013}{{33}{2013}{{Bengio et~al.}}{{Bengio, Courville, and Vincent}}}
+\bibcite{Neumann2019}{{34}{2019}{{Neumann et~al.}}{{Neumann, Pinto, Zhai, and Houlsby}}}
+\bibcite{Li2022}{{35}{2022}{{Li et~al.}}{{Li, Chen, Chen, and Shi}}}
+\bibcite{Bengio2012}{{36}{2012}{{Bengio}}{{}}}
+\bibcite{Engelen2019}{{37}{2019}{{van Engelen and Hoos}}{{}}}
+\bibcite{Ericsson2022}{{38}{2022}{{Ericsson et~al.}}{{Ericsson, Gouk, Loy, and Hospedales}}}
+\bibcite{Yuan2022}{{39}{2022}{{Yuan et~al.}}{{Yuan, Lin, Liu, Hang, and Zhou}}}
+\bibcite{Lisaius2024}{{40}{2024}{{Lisaius et~al.}}{{Lisaius, Blake, Keshav, and Atzberger}}}
+\bibcite{Windrim2019}{{41}{2019}{{Windrim et~al.}}{{Windrim, Ramakrishnan, Melkumyan, Murphy, and Chlingaryan}}}
+\bibcite{Begue2018}{{42}{2018}{{Bégué et~al.}}{{Bégué, Arvor, Bellon, Betbeder, de~Abelleyra, P.~D.~Ferraz, Lebourgeois, Lelong, Simões, and R.~Verón}}}
+\bibcite{Orynbaikyzy2019}{{43}{2019}{{Orynbaikyzy et~al.}}{{Orynbaikyzy, Gessner, and Conrad}}}
+\bibcite{PierrePott2022}{{44}{2022}{{Pierre~Pott et~al.}}{{Pierre~Pott, Jorge Carneiro~Amado, Augusto~Schwalbert, Mateus~Corassa, and Antonio~Ciampitti}}}
+\bibcite{MorenoMartinez2020}{{45}{2020}{{Moreno-Martínez et~al.}}{{Moreno-Martínez, Izquierdo-Verdiguier, Maneta, Camps-Valls, Robinson, Muñoz-Marí, Sedano, Clinton, and Running}}}
+\bibcite{Kandasamy2013}{{46}{2013}{{Kandasamy et~al.}}{{Kandasamy, Baret, Verger, Neveux, and Weiss}}}
+\bibcite{Tzelepi2022}{{47}{2022}{{Tzelepi et~al.}}{{Tzelepi, Nousi, Passalis, and Tefas}}}
+\bibcite{Balestriero2023}{{48}{2023}{{Balestriero et~al.}}{{Balestriero, Ibrahim, Sobal, Morcos, Shekhar, Goldstein, Bordes, Bardes, Mialon, Tian, Schwarzschild, Wilson, Geiping, Garrido, Fernandez, Bar, Pirsiavash, LeCun, and Goldblum}}}
+\bibcite{Tschannen2019}{{49}{2019}{{Tschannen et~al.}}{{Tschannen, Djolonga, Rubenstein, Gelly, and Lucic}}}
+\bibcite{LeKhac2020}{{50}{2020}{{Le-Khac et~al.}}{{Le-Khac, Healy, and Smeaton}}}
+\bibcite{Aitchison2021}{{51}{2021}{{Aitchison and Ganev}}{{}}}
+\bibcite{Chen2020}{{52}{2020}{{Chen et~al.}}{{Chen, Kornblith, Norouzi, and Hinton}}}
+\bibcite{Bachman2019}{{53}{2019}{{Bachman et~al.}}{{Bachman, Hjelm, and Buchwalter}}}
+\bibcite{Dwibedi2021}{{54}{2021}{{Dwibedi et~al.}}{{Dwibedi, Aytar, Tompson, Sermanet, and Zisserman}}}
+\bibcite{Bardes2021}{{55}{2021}{{Bardes et~al.}}{{Bardes, Ponce, and LeCun}}}
+\bibcite{Zbontar2021}{{56}{2021}{{Zbontar et~al.}}{{Zbontar, Jing, Misra, LeCun, and Deny}}}
+\bibcite{Coifman2006}{{57}{2006}{{Coifman and Lafon}}{{}}}
+\bibcite{Bank2020}{{58}{2020}{{Bank et~al.}}{{Bank, Koenigstein, and Giryes}}}
+\bibcite{Zhang2019}{{59}{2019}{{Zhang et~al.}}{{Zhang, Qi, Wang, and Luo}}}
+\bibcite{Valero2021}{{60}{2021}{{Valero et~al.}}{{Valero, Agullo, and Inglada}}}
+\bibcite{Baldi2012}{{61}{2012}{{Baldi}}{{}}}
+\bibcite{Foody2002}{{62}{2002}{{Foody}}{{}}}
+\expandafter\ifx\csname c@page@totc\endcsname\relax\newcounter{page@totc}\fi\setcounter{page@totc}{22}
+\newlabel{LastPage}{{C}{22}{Appendix~D}{page.22}{}}
+\gdef\lastpage@lastpage{22}
+\gdef\lastpage@lastpageHy{22}
+\gdef \@abspage@last{22}

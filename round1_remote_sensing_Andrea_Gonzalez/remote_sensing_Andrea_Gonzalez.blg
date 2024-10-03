@@ -1,0 +1,123 @@
+This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: remote_sensing_Andrea_Gonzalez.aux
+The style file: Definitions/mdpi.bst
+Database file #1: references.bib
+Warning--string name "aug" is undefined
+--line 7 of file references.bib
+Warning--string name "oct" is undefined
+--line 37 of file references.bib
+Warning--string name "dec" is undefined
+--line 51 of file references.bib
+Warning--string name "feb" is undefined
+--line 75 of file references.bib
+Warning--string name "sep" is undefined
+--line 99 of file references.bib
+Warning--string name "jun" is undefined
+--line 110 of file references.bib
+Warning--string name "jan" is undefined
+--line 124 of file references.bib
+Warning--string name "jan" is undefined
+--line 138 of file references.bib
+Warning--string name "oct" is undefined
+--line 152 of file references.bib
+Warning--string name "feb" is undefined
+--line 166 of file references.bib
+Warning--string name "apr" is undefined
+--line 181 of file references.bib
+Warning--string name "may" is undefined
+--line 195 of file references.bib
+Warning--string name "mar" is undefined
+--line 210 of file references.bib
+Warning--string name "nov" is undefined
+--line 224 of file references.bib
+Warning--string name "apr" is undefined
+--line 238 of file references.bib
+Warning--string name "nov" is undefined
+--line 252 of file references.bib
+Warning--string name "jan" is undefined
+--line 267 of file references.bib
+Warning--string name "aug" is undefined
+--line 281 of file references.bib
+Warning--string name "apr" is undefined
+--line 335 of file references.bib
+Warning--string name "jun" is undefined
+--line 350 of file references.bib
+Warning--string name "nov" is undefined
+--line 364 of file references.bib
+Warning--string name "may" is undefined
+--line 379 of file references.bib
+Warning--string name "jul" is undefined
+--line 393 of file references.bib
+Warning--string name "jan" is undefined
+--line 404 of file references.bib
+Warning--string name "apr" is undefined
+--line 431 of file references.bib
+Warning--string name "sep" is undefined
+--line 506 of file references.bib
+Warning--string name "jun" is undefined
+--line 521 of file references.bib
+Warning--string name "sep" is undefined
+--line 548 of file references.bib
+Warning--string name "jun" is undefined
+--line 562 of file references.bib
+Warning--string name "jul" is undefined
+--line 593 of file references.bib
+Warning--string name "jul" is undefined
+--line 625 of file references.bib
+Warning--string name "jul" is undefined
+--line 791 of file references.bib
+Warning--string name "apr" is undefined
+--line 806 of file references.bib
+Warning--string name "mar" is undefined
+--line 821 of file references.bib
+Warning--string name "mar" is undefined
+--line 848 of file references.bib
+Warning--string name "jan" is undefined
+--line 862 of file references.bib
+Warning--empty year in Rokach2005
+Warning--empty title in Breiman2001
+Warning--empty author and editor in ML2023
+Warning--empty journal in Tschannen2019
+You've used 62 entries,
+            2885 wiz_defined-function locations,
+            1013 strings with 18530 characters,
+and the built_in function-call counts, 27873 in all, are:
+= -- 2366
+> -- 1957
+< -- 21
++ -- 852
+- -- 525
+* -- 2517
+:= -- 4276
+add.period$ -- 231
+call.type$ -- 62
+change.case$ -- 62
+chr.to.int$ -- 62
+cite$ -- 67
+duplicate$ -- 1170
+empty$ -- 2091
+format.name$ -- 655
+if$ -- 5851
+int.to.chr$ -- 1
+int.to.str$ -- 62
+missing$ -- 56
+newline$ -- 354
+num.names$ -- 191
+pop$ -- 668
+preamble$ -- 0
+purify$ -- 62
+quote$ -- 0
+skip$ -- 797
+stack$ -- 0
+substring$ -- 1155
+swap$ -- 268
+text.length$ -- 10
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 419
+warning$ -- 4
+while$ -- 211
+width$ -- 0
+write$ -- 850
+(There were 40 warnings)
