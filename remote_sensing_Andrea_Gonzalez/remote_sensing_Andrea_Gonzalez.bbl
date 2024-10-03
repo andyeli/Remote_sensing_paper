@@ -1,0 +1,354 @@
+\begin{thebibliography}{999}
+
+\bibitem[Vuolo et~al.(2018)Vuolo, Neuwirth, Immitzer, Atzberger, and Ng]{Vuolo2018}
+Vuolo, F.; Neuwirth, M.; Immitzer, M.; Atzberger, C.; Ng, W.T.
+\newblock How much does multi-temporal Sentinel-2 data improve crop type classification?
+\newblock {\em International Journal of Applied Earth Observation and Geoinformation} {\bf 2018}, {\em 72},~122--130.
+\newblock {\url{https://doi.org/10.1016/j.jag.2018.06.007}}.
+
+\bibitem[Pelletier et~al.(2019)Pelletier, Webb, and Petitjean]{Pelletier2019}
+Pelletier, C.; Webb, G.; Petitjean, F.
+\newblock Temporal Convolutional Neural Network for the Classification of Satellite Image Time Series.
+\newblock {\em Remote Sensing} {\bf 2019}, {\em 11},~523.
+\newblock {\url{https://doi.org/10.3390/rs11050523}}.
+
+\bibitem[Foerster et~al.(2012)Foerster, Kaden, Foerster, and Itzerott]{Foerster2012}
+Foerster, S.; Kaden, K.; Foerster, M.; Itzerott, S.
+\newblock Crop type mapping using spectral–temporal profiles and phenological information.
+\newblock {\em Computers and Electronics in Agriculture} {\bf 2012}, {\em 89},~30--40.
+\newblock {\url{https://doi.org/10.1016/j.compag.2012.07.015}}.
+
+\bibitem[Chen et~al.(2022)Chen, Zheng, Wang, Hellwich, Chen, Yang, Liu, Luo, Bao, and Chen]{Chen2022}
+Chen, B.; Zheng, H.; Wang, L.; Hellwich, O.; Chen, C.; Yang, L.; Liu, T.; Luo, G.; Bao, A.; Chen, X.
+\newblock A joint learning Im-BiLSTM model for incomplete time-series Sentinel-2A data imputation and crop classification.
+\newblock {\em International Journal of Applied Earth Observation and Geoinformation} {\bf 2022}, {\em 108},~102762.
+\newblock {\url{https://doi.org/10.1016/j.jag.2022.102762}}.
+
+\bibitem[Hu et~al.(2016)Hu, Wu, Song, Yu, Lu, Yang, Tang, and Long]{Hu2016}
+Hu, Q.; Wu, W.; Song, Q.; Yu, Q.; Lu, M.; Yang, P.; Tang, H.; Long, Y.
+\newblock Extending the Pairwise Separability Index for Multicrop Identification Using Time-Series MODIS Images.
+\newblock {\em IEEE Transactions on Geoscience and Remote Sensing} {\bf 2016}, {\em 54},~6349--6361.
+\newblock {\url{https://doi.org/10.1109/tgrs.2016.2581210}}.
+
+\bibitem[Palchowdhuri et~al.(2018)Palchowdhuri, Valcarce-Diñeiro, King, and Sanabria-Soto]{Palchowdhuri2018}
+Palchowdhuri, Y.; Valcarce-Diñeiro, R.; King, P.; Sanabria-Soto, M.
+\newblock Classification of multi-temporal spectral indices for crop type mapping: a case study in Coalville, UK.
+\newblock {\em The Journal of Agricultural Science} {\bf 2018}, {\em 156},~24--36.
+\newblock {\url{https://doi.org/10.1017/s0021859617000879}}.
+
+\bibitem[Heupel et~al.(2018)Heupel, Spengler, and Itzerott]{Heupel2018}
+Heupel, K.; Spengler, D.; Itzerott, S.
+\newblock A Progressive Crop-Type Classification Using Multitemporal Remote Sensing Data and Phenological Information.
+\newblock {\em PFG – Journal of Photogrammetry, Remote Sensing and Geoinformation Science} {\bf 2018}, {\em 86},~53--69.
+\newblock {\url{https://doi.org/10.1007/s41064-018-0050-7}}.
+
+\bibitem[Li et~al.(2023)Li, Tian, and Tian]{Li2023}
+Li, Q.; Tian, J.; Tian, Q.
+\newblock Deep Learning Application for Crop Classification via Multi-Temporal Remote Sensing Images.
+\newblock {\em Agriculture} {\bf 2023}, {\em 13},~906.
+\newblock {\url{https://doi.org/10.3390/agriculture13040906}}.
+
+\bibitem[Dong et~al.(2020)Dong, Ma, Wu, Zhang, and Jiao]{Dong2020}
+Dong, H.; Ma, W.; Wu, Y.; Zhang, J.; Jiao, L.
+\newblock Self-Supervised Representation Learning for Remote Sensing Image Change Detection Based on Temporal Prediction.
+\newblock {\em Remote Sensing} {\bf 2020}, {\em 12},~1868.
+\newblock {\url{https://doi.org/10.3390/rs12111868}}.
+
+\bibitem[Paris et~al.(2020)Paris, Weikmann, and Bruzzone]{Paris2020}
+Paris, C.; Weikmann, G.; Bruzzone, L.
+\newblock Monitoring of agricultural areas by using Sentinel 2 image time series and deep learning techniques.
+\newblock In Proceedings of the Image and Signal Processing for Remote Sensing XXVI; Notarnicola, C.; Bovenga, F.; Bruzzone, L.; Bovolo, F.; Benediktsson, J.A.; Santi, E.; Pierdicca, N., Eds. SPIE,  2020.
+\newblock {\url{https://doi.org/10.1117/12.2574745}}.
+
+\bibitem[Rußwurm et~al.(2020)Rußwurm, Pelletier, Zollner, Lefèvre, and Körner]{Russwurm2020}
+Rußwurm, M.; Pelletier, C.; Zollner, M.; Lefèvre, S.; Körner, M.
+\newblock BREIZHCROPS: A TIME SERIES DATASET FOR CROP TYPE MAPPING.
+\newblock {\em The International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences} {\bf 2020}, {\em XLIII-B2-2020},~1545--1551.
+\newblock {\url{https://doi.org/10.5194/isprs-archives-xliii-b2-2020-1545-2020}}.
+
+\bibitem[Yin et~al.(2020)Yin, You, Zhang, Huang, and Dong]{Yin2020}
+Yin, L.; You, N.; Zhang, G.; Huang, J.; Dong, J.
+\newblock Optimizing Feature Selection of Individual Crop Types for Improved Crop Mapping.
+\newblock {\em Remote Sensing} {\bf 2020}, {\em 12},~162.
+\newblock {\url{https://doi.org/10.3390/rs12010162}}.
+
+\bibitem[Yi et~al.(2020)Yi, Jia, and Chen]{Yi2020}
+Yi, Z.; Jia, L.; Chen, Q.
+\newblock Crop Classification Using Multi-Temporal Sentinel-2 Data in the Shiyang River Basin of China.
+\newblock {\em Remote Sensing} {\bf 2020}, {\em 12},~4052.
+\newblock {\url{https://doi.org/10.3390/rs12244052}}.
+
+\bibitem[He et~al.(2022)He, Peng, Chen, and Wang]{He2022}
+He, S.; Peng, P.; Chen, Y.; Wang, X.
+\newblock Multi-Crop Classification Using Feature Selection-Coupled Machine Learning Classifiers Based on Spectral, Textural and Environmental Features.
+\newblock {\em Remote Sensing} {\bf 2022}, {\em 14},~3153.
+\newblock {\url{https://doi.org/10.3390/rs14133153}}.
+
+\bibitem[Dumeur et~al.(2024)Dumeur, Valero, and Inglada]{Dumeur2024}
+Dumeur, I.; Valero, S.; Inglada, J.
+\newblock Self-Supervised Spatio-Temporal Representation Learning of Satellite Image Time Series.
+\newblock {\em IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing} {\bf 2024}, {\em 17},~4350--4367.
+\newblock {\url{https://doi.org/10.1109/jstars.2024.3358066}}.
+
+\bibitem[Wang et~al.(2019)Wang, Azzari, and Lobell]{Wang2019}
+Wang, S.; Azzari, G.; Lobell, D.B.
+\newblock Crop type mapping without field-level labels: Random forest transfer and unsupervised clustering techniques.
+\newblock {\em Remote Sensing of Environment} {\bf 2019}, {\em 222},~303--317.
+\newblock {\url{https://doi.org/10.1016/j.rse.2018.12.026}}.
+
+\bibitem[Roy and Yan(2020)]{Roy2020}
+Roy, D.; Yan, L.
+\newblock Robust Landsat-based crop time series modelling.
+\newblock {\em Remote Sensing of Environment} {\bf 2020}, {\em 238},~110810.
+\newblock {\url{https://doi.org/10.1016/j.rse.2018.06.038}}.
+
+\bibitem[Feng et~al.(2019)Feng, Zhao, Liu, Zhang, Zhang, and Guo]{Feng2019}
+Feng, S.; Zhao, J.; Liu, T.; Zhang, H.; Zhang, Z.; Guo, X.
+\newblock Crop Type Identification and Mapping Using Machine Learning Algorithms and Sentinel-2 Time Series Data.
+\newblock {\em IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing} {\bf 2019}, {\em 12},~3295--3306.
+\newblock {\url{https://doi.org/10.1109/jstars.2019.2922469}}.
+
+\bibitem[Kussul et~al.(2017)Kussul, Lavreniuk, Skakun, and Shelestov]{Kussul2017}
+Kussul, N.; Lavreniuk, M.; Skakun, S.; Shelestov, A.
+\newblock Deep Learning Classification of Land Cover and Crop Types Using Remote Sensing Data.
+\newblock {\em IEEE Geoscience and Remote Sensing Letters} {\bf 2017}, {\em 14},~778--782.
+\newblock {\url{https://doi.org/10.1109/lgrs.2017.2681128}}.
+
+\bibitem[Cai et~al.(2018)Cai, Guan, Peng, Wang, Seifert, Wardlow, and Li]{Cai2018}
+Cai, Y.; Guan, K.; Peng, J.; Wang, S.; Seifert, C.; Wardlow, B.; Li, Z.
+\newblock A high-performance and in-season classification system of field-level crop types using time-series Landsat data and a machine learning approach.
+\newblock {\em Remote Sensing of Environment} {\bf 2018}, {\em 210},~35--47.
+\newblock {\url{https://doi.org/10.1016/j.rse.2018.02.045}}.
+
+\bibitem[Manish~Lad et~al.(2022)Manish~Lad, Mani~Bharathi, Akash~Saravanan, and Karthik]{ManishLad2022}
+Manish~Lad, A.; Mani~Bharathi, K.; Akash~Saravanan, B.; Karthik, R.
+\newblock Factors affecting agriculture and estimation of crop yield using supervised learning algorithms.
+\newblock {\em Materials Today: Proceedings} {\bf 2022}, {\em 62},~4629--4634.
+\newblock {\url{https://doi.org/10.1016/j.matpr.2022.03.080}}.
+
+\bibitem[Inglada et~al.(2017)Inglada, Vincent, Arias, Tardy, Morin, and Rodes]{Inglada2017}
+Inglada, J.; Vincent, A.; Arias, M.; Tardy, B.; Morin, D.; Rodes, I.
+\newblock Operational High Resolution Land Cover Map Production at the Country Scale Using Satellite Image Time Series.
+\newblock {\em Remote Sensing} {\bf 2017}, {\em 9},~95.
+\newblock {\url{https://doi.org/10.3390/rs9010095}}.
+
+\bibitem[Rokach and Maimon()]{Rokach2005}
+Rokach, L.; Maimon, O., Decision Trees.
+\newblock In {\em Data Mining and Knowledge Discovery Handbook}; Springer-Verlag; pp. 165--192.
+\newblock {\url{https://doi.org/10.1007/0-387-25465-x_9}}.
+
+\bibitem[Breiman(2001)]{Breiman2001}
+Breiman, L.
+\newblock {\em Machine Learning} {\bf 2001}, {\em 45},~5--32.
+\newblock {\url{https://doi.org/10.1023/a:1010933404324}}.
+
+\bibitem[Cortes(1995)]{cortes1995}
+Cortes, C.
+\newblock Support-Vector Networks.
+\newblock {\em Machine Learning} {\bf 1995}.
+
+\bibitem[Rosenblatt(1958)]{Rosenblatt1958}
+Rosenblatt, F.
+\newblock The perceptron: A probabilistic model for information storage and organization in the brain.
+\newblock {\em Psychological Review} {\bf 1958}, {\em 65},~386--408.
+\newblock {\url{https://doi.org/10.1037/h0042519}}.
+
+\bibitem[ML2(2023)]{ML2023}
+{\em Machine Learning for Data Science Handbook: Data Mining and Knowledge Discovery Handbook}; Springer International Publishing,  2023.
+\newblock {\url{https://doi.org/10.1007/978-3-031-24628-9}}.
+
+\bibitem[Lopez~Pinaya et~al.(2020)Lopez~Pinaya, Vieira, Garcia-Dias, and Mechelli]{LopezPinaya2020}
+Lopez~Pinaya, W.H.; Vieira, S.; Garcia-Dias, R.; Mechelli, A., Autoencoders.
+\newblock In {\em Machine Learning}; Elsevier,  2020; pp. 193--208.
+\newblock {\url{https://doi.org/10.1016/b978-0-12-815739-8.00011-0}}.
+
+\bibitem[Lopez-Fandino et~al.(2018)Lopez-Fandino, Garea, Heras, and Arguello]{LopezFandino2018}
+Lopez-Fandino, J.; Garea, A.S.; Heras, D.B.; Arguello, F.
+\newblock Stacked Autoencoders for Multiclass Change Detection in Hyperspectral Images.
+\newblock In Proceedings of the IGARSS 2018 - 2018 IEEE International Geoscience and Remote Sensing Symposium. IEEE,  2018.
+\newblock {\url{https://doi.org/10.1109/igarss.2018.8518338}}.
+
+\bibitem[Luppino et~al.(2024)Luppino, Hansen, Kampffmeyer, Bianchi, Moser, Jenssen, and Anfinsen]{Luppino2024}
+Luppino, L.T.; Hansen, M.A.; Kampffmeyer, M.; Bianchi, F.M.; Moser, G.; Jenssen, R.; Anfinsen, S.N.
+\newblock Code-Aligned Autoencoders for Unsupervised Change Detection in Multimodal Remote Sensing Images.
+\newblock {\em IEEE Transactions on Neural Networks and Learning Systems} {\bf 2024}, {\em 35},~60--72.
+\newblock {\url{https://doi.org/10.1109/tnnls.2022.3172183}}.
+
+\bibitem[Kalinicheva et~al.(2019)Kalinicheva, Sublime, and Trocan]{Kalinicheva2019}
+Kalinicheva, E.; Sublime, J.; Trocan, M., Change Detection in Satellite Images Using Reconstruction Errors of Joint Autoencoders.
+\newblock In {\em Artificial Neural Networks and Machine Learning – ICANN 2019: Image Processing}; Springer International Publishing,  2019; pp. 637--648.
+\newblock {\url{https://doi.org/10.1007/978-3-030-30508-6_50}}.
+
+\bibitem[Swope et~al.(2021)Swope, Rudelis, and Story]{Swope2021}
+Swope, A.M.; Rudelis, X.H.; Story, K.T.
+\newblock Representation Learning for Remote Sensing: An Unsupervised Sensor Fusion Approach,  2021.
+\newblock {\url{https://doi.org/10.48550/ARXIV.2108.05094}}.
+
+\bibitem[Bengio et~al.(2013)Bengio, Courville, and Vincent]{Bengio2013}
+Bengio, Y.; Courville, A.; Vincent, P.
+\newblock Representation Learning: A Review and New Perspectives.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence} {\bf 2013}, {\em 35},~1798--1828.
+\newblock {\url{https://doi.org/10.1109/tpami.2013.50}}.
+
+\bibitem[Neumann et~al.(2019)Neumann, Pinto, Zhai, and Houlsby]{Neumann2019}
+Neumann, M.; Pinto, A.S.; Zhai, X.; Houlsby, N.
+\newblock In-domain representation learning for remote sensing,  2019.
+\newblock {\url{https://doi.org/10.48550/ARXIV.1911.06721}}.
+
+\bibitem[Li et~al.(2022)Li, Chen, Chen, and Shi]{Li2022}
+Li, W.; Chen, K.; Chen, H.; Shi, Z.
+\newblock Geographical Knowledge-Driven Representation Learning for Remote Sensing Images.
+\newblock {\em IEEE Transactions on Geoscience and Remote Sensing} {\bf 2022}, {\em 60},~1--16.
+\newblock {\url{https://doi.org/10.1109/tgrs.2021.3115569}}.
+
+\bibitem[Bengio(2012)]{Bengio2012}
+Bengio, Y.
+\newblock Deep Learning of Representations for Unsupervised and Transfer Learning.
+\newblock In Proceedings of the Proceedings of ICML Workshop on Unsupervised and Transfer Learning; Guyon, I.; Dror, G.; Lemaire, V.; Taylor, G.; Silver, D., Eds., Bellevue, Washington, USA,  02 Jul 2012; Vol.~27, {\em Proceedings of Machine Learning Research}, pp. 17--36.
+
+\bibitem[van Engelen and Hoos(2019)]{Engelen2019}
+van Engelen, J.E.; Hoos, H.H.
+\newblock A survey on semi-supervised learning.
+\newblock {\em Machine Learning} {\bf 2019}, {\em 109},~373--440.
+\newblock {\url{https://doi.org/10.1007/s10994-019-05855-6}}.
+
+\bibitem[Ericsson et~al.(2022)Ericsson, Gouk, Loy, and Hospedales]{Ericsson2022}
+Ericsson, L.; Gouk, H.; Loy, C.C.; Hospedales, T.M.
+\newblock Self-Supervised Representation Learning: Introduction, advances, and challenges.
+\newblock {\em IEEE Signal Processing Magazine} {\bf 2022}, {\em 39},~42--62.
+\newblock {\url{https://doi.org/10.1109/msp.2021.3134634}}.
+
+\bibitem[Yuan et~al.(2022)Yuan, Lin, Liu, Hang, and Zhou]{Yuan2022}
+Yuan, Y.; Lin, L.; Liu, Q.; Hang, R.; Zhou, Z.G.
+\newblock SITS-Former: A pre-trained spatio-spectral-temporal representation model for Sentinel-2 time series classification.
+\newblock {\em International Journal of Applied Earth Observation and Geoinformation} {\bf 2022}, {\em 106},~102651.
+\newblock {\url{https://doi.org/10.1016/j.jag.2021.102651}}.
+
+\bibitem[Lisaius et~al.(2024)Lisaius, Blake, Keshav, and Atzberger]{Lisaius2024}
+Lisaius, M.C.; Blake, A.; Keshav, S.; Atzberger, C.
+\newblock Using Barlow Twins to Create Representations From Cloud-Corrupted Remote Sensing Time Series.
+\newblock {\em IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing} {\bf 2024}, {\em 17},~13162--13168.
+\newblock {\url{https://doi.org/10.1109/jstars.2024.3426044}}.
+
+\bibitem[Windrim et~al.(2019)Windrim, Ramakrishnan, Melkumyan, Murphy, and Chlingaryan]{Windrim2019}
+Windrim, L.; Ramakrishnan, R.; Melkumyan, A.; Murphy, R.J.; Chlingaryan, A.
+\newblock Unsupervised Feature-Learning for Hyperspectral Data with Autoencoders.
+\newblock {\em Remote Sensing} {\bf 2019}, {\em 11},~864.
+\newblock {\url{https://doi.org/10.3390/rs11070864}}.
+
+\bibitem[Bégué et~al.(2018)Bégué, Arvor, Bellon, Betbeder, de~Abelleyra, P.~D.~Ferraz, Lebourgeois, Lelong, Simões, and R.~Verón]{Begue2018}
+Bégué, A.; Arvor, D.; Bellon, B.; Betbeder, J.; de~Abelleyra, D.; P.~D.~Ferraz, R.; Lebourgeois, V.; Lelong, C.; Simões, M.; R.~Verón, S.
+\newblock Remote Sensing and Cropping Practices: A Review.
+\newblock {\em Remote Sensing} {\bf 2018}, {\em 10},~99.
+\newblock {\url{https://doi.org/10.3390/rs10010099}}.
+
+\bibitem[Orynbaikyzy et~al.(2019)Orynbaikyzy, Gessner, and Conrad]{Orynbaikyzy2019}
+Orynbaikyzy, A.; Gessner, U.; Conrad, C.
+\newblock Crop type classification using a combination of optical and radar remote sensing data: a review.
+\newblock {\em International Journal of Remote Sensing} {\bf 2019}, {\em 40},~6553--6595.
+\newblock {\url{https://doi.org/10.1080/01431161.2019.1569791}}.
+
+\bibitem[Pierre~Pott et~al.(2022)Pierre~Pott, Jorge Carneiro~Amado, Augusto~Schwalbert, Mateus~Corassa, and Antonio~Ciampitti]{PierrePott2022}
+Pierre~Pott, L.; Jorge Carneiro~Amado, T.; Augusto~Schwalbert, R.; Mateus~Corassa, G.; Antonio~Ciampitti, I.
+\newblock Crop type classification in Southern Brazil: Integrating remote sensing, crop modeling and machine learning.
+\newblock {\em Computers and Electronics in Agriculture} {\bf 2022}, {\em 201},~107320.
+\newblock {\url{https://doi.org/10.1016/j.compag.2022.107320}}.
+
+\bibitem[Moreno-Martínez et~al.(2020)Moreno-Martínez, Izquierdo-Verdiguier, Maneta, Camps-Valls, Robinson, Muñoz-Marí, Sedano, Clinton, and Running]{MorenoMartinez2020}
+Moreno-Martínez, A.; Izquierdo-Verdiguier, E.; Maneta, M.P.; Camps-Valls, G.; Robinson, N.; Muñoz-Marí, J.; Sedano, F.; Clinton, N.; Running, S.W.
+\newblock Multispectral high resolution sensor fusion for smoothing and gap-filling in the cloud.
+\newblock {\em Remote Sensing of Environment} {\bf 2020}, {\em 247},~111901.
+\newblock {\url{https://doi.org/10.1016/j.rse.2020.111901}}.
+
+\bibitem[Kandasamy et~al.(2013)Kandasamy, Baret, Verger, Neveux, and Weiss]{Kandasamy2013}
+Kandasamy, S.; Baret, F.; Verger, A.; Neveux, P.; Weiss, M.
+\newblock A comparison of methods for smoothing and gap filling time series of remote sensing observations – application to MODIS LAI products.
+\newblock {\em Biogeosciences} {\bf 2013}, {\em 10},~4055--4071.
+\newblock {\url{https://doi.org/10.5194/bg-10-4055-2013}}.
+
+\bibitem[Tzelepi et~al.(2022)Tzelepi, Nousi, Passalis, and Tefas]{Tzelepi2022}
+Tzelepi, M.; Nousi, P.; Passalis, N.; Tefas, A., Representation learning and retrieval.
+\newblock In {\em Deep Learning for Robot Perception and Cognition}; Elsevier,  2022; pp. 221--241.
+\newblock {\url{https://doi.org/10.1016/b978-0-32-385787-1.00015-4}}.
+
+\bibitem[Balestriero et~al.(2023)Balestriero, Ibrahim, Sobal, Morcos, Shekhar, Goldstein, Bordes, Bardes, Mialon, Tian, Schwarzschild, Wilson, Geiping, Garrido, Fernandez, Bar, Pirsiavash, LeCun, and Goldblum]{Balestriero2023}
+Balestriero, R.; Ibrahim, M.; Sobal, V.; Morcos, A.; Shekhar, S.; Goldstein, T.; Bordes, F.; Bardes, A.; Mialon, G.; Tian, Y.;  et~al.
+\newblock A Cookbook of Self-Supervised Learning,  2023.
+\newblock {\url{https://doi.org/10.48550/ARXIV.2304.12210}}.
+
+\bibitem[Tschannen et~al.(2019)Tschannen, Djolonga, Rubenstein, Gelly, and Lucic]{Tschannen2019}
+Tschannen, M.; Djolonga, J.; Rubenstein, P.K.; Gelly, S.; Lucic, M.
+\newblock On Mutual Information Maximization for Representation Learning {\bf 2019}.
+\newblock  \href{http://xxx.lanl.gov/abs/1907.13625}{{\normalfont [arXiv:cs.LG/1907.13625]}}.
+\newblock {\url{https://doi.org/10.48550/ARXIV.1907.13625}}.
+
+\bibitem[Le-Khac et~al.(2020)Le-Khac, Healy, and Smeaton]{LeKhac2020}
+Le-Khac, P.H.; Healy, G.; Smeaton, A.F.
+\newblock Contrastive Representation Learning: A Framework and Review.
+\newblock {\em IEEE Access} {\bf 2020}, {\em 8},~193907--193934.
+\newblock {\url{https://doi.org/10.1109/access.2020.3031549}}.
+
+\bibitem[Aitchison and Ganev(2021)]{Aitchison2021}
+Aitchison, L.; Ganev, S.
+\newblock InfoNCE is variational inference in a recognition parameterised model,  2021.
+\newblock {\url{https://doi.org/10.48550/ARXIV.2107.02495}}.
+
+\bibitem[Chen et~al.(2020)Chen, Kornblith, Norouzi, and Hinton]{Chen2020}
+Chen, T.; Kornblith, S.; Norouzi, M.; Hinton, G.
+\newblock A Simple Framework for Contrastive Learning of Visual Representations.
+\newblock In Proceedings of the Proceedings of the 37th International Conference on Machine Learning; III, H.D.; Singh, A., Eds. PMLR,  13--18 Jul 2020, Vol. 119, {\em Proceedings of Machine Learning Research}, pp. 1597--1607.
+
+\bibitem[Bachman et~al.(2019)Bachman, Hjelm, and Buchwalter]{Bachman2019}
+Bachman, P.; Hjelm, R.D.; Buchwalter, W.
+\newblock Learning Representations by Maximizing Mutual Information Across Views,  2019.
+\newblock {\url{https://doi.org/10.48550/ARXIV.1906.00910}}.
+
+\bibitem[Dwibedi et~al.(2021)Dwibedi, Aytar, Tompson, Sermanet, and Zisserman]{Dwibedi2021}
+Dwibedi, D.; Aytar, Y.; Tompson, J.; Sermanet, P.; Zisserman, A.
+\newblock With a Little Help from My Friends: Nearest-Neighbor Contrastive Learning of Visual Representations,  2021.
+\newblock {\url{https://doi.org/10.48550/ARXIV.2104.14548}}.
+
+\bibitem[Bardes et~al.(2021)Bardes, Ponce, and LeCun]{Bardes2021}
+Bardes, A.; Ponce, J.; LeCun, Y.
+\newblock VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning,  2021.
+\newblock {\url{https://doi.org/10.48550/ARXIV.2105.04906}}.
+
+\bibitem[Zbontar et~al.(2021)Zbontar, Jing, Misra, LeCun, and Deny]{Zbontar2021}
+Zbontar, J.; Jing, L.; Misra, I.; LeCun, Y.; Deny, S.
+\newblock Barlow Twins: Self-Supervised Learning via Redundancy Reduction,  2021.
+\newblock {\url{https://doi.org/10.48550/ARXIV.2103.03230}}.
+
+\bibitem[Coifman and Lafon(2006)]{Coifman2006}
+Coifman, R.R.; Lafon, S.
+\newblock Diffusion maps.
+\newblock {\em Applied and Computational Harmonic Analysis} {\bf 2006}, {\em 21},~5--30.
+\newblock {\url{https://doi.org/10.1016/j.acha.2006.04.006}}.
+
+\bibitem[Bank et~al.(2020)Bank, Koenigstein, and Giryes]{Bank2020}
+Bank, D.; Koenigstein, N.; Giryes, R.
+\newblock Autoencoders,  2020.
+\newblock {\url{https://doi.org/10.48550/ARXIV.2003.05991}}.
+
+\bibitem[Zhang et~al.(2019)Zhang, Qi, Wang, and Luo]{Zhang2019}
+Zhang, L.; Qi, G.J.; Wang, L.; Luo, J.
+\newblock AET vs. AED: Unsupervised Representation Learning by Auto-Encoding Transformations rather than Data,  2019.
+\newblock {\url{https://doi.org/10.48550/ARXIV.1901.04596}}.
+
+\bibitem[Valero et~al.(2021)Valero, Agullo, and Inglada]{Valero2021}
+Valero, S.; Agullo, F.; Inglada, J.
+\newblock Unsupervised Learning of Low Dimensional Satellite Image Representations via Variational Autoencoders.
+\newblock In Proceedings of the 2021 IEEE International Geoscience and Remote Sensing Symposium IGARSS. IEEE,  2021.
+\newblock {\url{https://doi.org/10.1109/igarss47720.2021.9554661}}.
+
+\bibitem[Baldi(2012)]{Baldi2012}
+Baldi, P.
+\newblock Autoencoders, Unsupervised Learning, and Deep Architectures.
+\newblock In Proceedings of the Proceedings of ICML Workshop on Unsupervised and Transfer Learning; Guyon, I.; Dror, G.; Lemaire, V.; Taylor, G.; Silver, D., Eds., Bellevue, Washington, USA,  02 Jul 2012; Vol.~27, {\em Proceedings of Machine Learning Research}, pp. 37--49.
+
+\bibitem[Foody(2002)]{Foody2002}
+Foody, G.M.
+\newblock Status of land cover classification accuracy assessment.
+\newblock {\em Remote Sensing of Environment} {\bf 2002}, {\em 80},~185--201.
+\newblock {\url{https://doi.org/10.1016/s0034-4257(01)00295-4}}.
+
+\end{thebibliography}
