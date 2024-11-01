@@ -76,7 +76,7 @@
 
 %=================================================================
 % Full title of the paper (Capitalized)
-\Title{Representation learning for crop type classification of multispectral multitemporal remote sensing data}
+\Title{Representation learning for crop type classification of multispectral multitemporal remote sensing data (Round 1)}
 
 % MDPI internal command: Title for citation in the left column
 \TitleCitation{Title}
@@ -121,20 +121,22 @@ $^{2}$ \quad Mantle Labs, Grünentorgasse 19, Vienna 1090, Austria}
 
 % Abstract (Do not insert blank lines, i.e. \\) 
 \abstract{Remote sensing (RS) spectral time series are a substantial source of information for earth monitoring tasks. % such as: land use and land cover classification, change detection, forest monitoring, among others. 
-Supervised deep learning algorithms with large number of training samples are usually used to develop accurate solutions for these applications.
-However, such approaches often face the lack of reliable labeled datasets. 
-In addition, RS images acquired by optical sensors are frequently degraded by clouds/shadows, producing missing observations of an area of interest, creating irregular observation pattern.
+Recently, supervised deep learning algorithms are used to develop accurate solutions for applications involving RS data.
+However, such approaches require fixed-length inputs and large reliable labeled datasets.
+% In addition, 
+Unfortunately, RS images acquired by optical sensors are frequently degraded by clouds and cloud shadows, producing missing observations of an area of interest, creating irregular observation patterns.
 To address these issues, efforts have been made to implement frameworks that generate meaningful representations from the available data and alleviate the deficiencies of the data sources and supervised algorithms.
-Here, we propose a conceptually and computationally simple representation learning (RL) approach based on autoencoders (AEs) to generate informative and discriminative features for crop type classification using only a tiny set of reference samples.
-Our AEs architecture has very few parameters compared to other models proposed in the state-of-the-art, leading to a scalable model able to process very large areas in low computational time.
+Here, we propose a conceptually and computationally simple representation learning (RL) approach based on autoencoders (AEs) to generate informative and discriminative features for crop type classification.
+% using only a tiny set of reference samples.
+% Our AEs architecture has very few parameters compared to other models proposed in the state-of-the-art, leading to a scalable model able to process very large areas in low computational time.
 %\textcolor{orange}{Different to other papers, we propose a representation learning model based on autoencoders (AEs) to create informative and discriminative features for crop type classification.} In addition, \textcolor{orange}{the architecture is configured to keep very low number of parameters compared to other models proposed in the state of the art}, producing a scalable model able to process very large areas in low computational time.
-The proposed methodology ensembles a set of single layer AEs with very limited number of neurons, each one trained with mono temporal spectral features of a set of samples per class.
+The proposed methodology ensembles a set of single layer AEs with very limited number of neurons, each one trained with mono temporal spectral features of a set of samples belonging to a class, leading to a model able to process very large areas in low computational time and flexible to the availability of clear temporal observations.
 % belonging to a specific crop type, with the aim of reducing reconstruction difference for samples from the same crop type. 
-The reconstruction difference vector between input samples and its corresponding estimation are averaged over all cloud/shadows free temporal observations of a pixel location. This averaged reconstruction difference vector is the base for the representations. 
-Experimental results show that the proposed extremely light-weight architecture indeed generates separable features for competitive performances in crop type classification. A simple classification fully connected network (FCN) was trained and tested with representations generated for the Sentinel-2 multispectral multitemporal dataset named BreizCrops. 
-Our method reaches $74.44\%$ overall accuracy which is $1\%$ higher than a convolutional neural network OmniscCNN, and $5.56\%$ lower than a transformer model, while our method is composed by $6.8k$ parameters, $\sim 400x$ less than the OmnicsCNN and $\sim 27x$ less than Transformers. These results prove that our method is competitive in classification performance compared with state-of-the-art methods while requiring much lower computational load.}
+The reconstruction difference vector between input samples and its corresponding estimation are averaged over all cloud/shadows-free temporal observations of a pixel location. This averaged reconstruction difference vector is the base for the representations. 
+Experimental results show that the proposed extremely light-weight architecture indeed generates separable features for competitive performances in crop type classification. Conventional classification models were trained and tested with representations generated for the Sentinel-2 multispectral multitemporal dataset named BreizCrops. 
+Our method reaches $76.72\%$ overall accuracy which is $\sim 6\%$ higher than using original Sentinel-2 data on conventional classifiers and $\sim 4\%$ better than even complex deep models as OmnisCNN, and it is only $3\%$ lower than a extremely complex and time consuming models such as transformers and LSTMs. Our method is overall composed by only $6.8k$ parameters, i.e., $\sim 400x$ less than OmnicsCNN and $\sim 27x$ less than Transformers. For this case of study, the results prove that our method is competitive in classification performance compared with state-of-the-art methods while requiring much lower computational load.}
 % Keywords
-\keyword{crop types; multispectral time series; autoencoder; representation learning; reconstruction} 
+\keyword{crop types; multispectral; multitemporal; autoencoder; representation learning} 
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
@@ -190,26 +192,22 @@ Our method reaches $74.44\%$ overall accuracy which is $1\%$ higher than a convo
 \section{Introduction}
 Monitoring and analysis of the Earth's surface using remote sensors has been increasingly used for crop surface studies, 
 given the quantity and availability of spectral-temporal images. 
-The multi-spectral time series from sensors such as Landsat or Sentinel-2 have provided very cost-effective technical support to achieve the reliable identification and monitoring of large cropping areas \cite{Vuolo2018, Pelletier2019, Foerster2012, Chen2022}. 
-While a wide number of data sources and 
-supervised classification algorithms have been used for crop mapping \cite{Hu2016,Palchowdhuri2018,Heupel2018,Li2023,Dong2020,Paris2020,Russwurm2020,Foerster2012,Chen2022}, limited efforts have been made in feature selection as well as the use of un- and self-supervised learning algorithms to alleviate scarcity of labels and missing data produced by clouds.
-Notable overviews and examples are provided in \cite{Yin2020,Yi2020,He2022, Dumeur2024, Wang2019}.
+The multi-spectral time series from sensors such as Landsat or Sentinel-2 have provided very cost-effective technical support to achieve the reliable identification and monitoring of large cropping areas \cite{Vuolo2018, Pelletier2019, Foerster2012, Chen2022, Tariq2022, Gao2021}. 
+While a wide number of data sources and supervised classification algorithms have been used for crop mapping \cite{Palchowdhuri2018,Heupel2018,Li2023,Dong2020,Paris2020,Russwurm2020,Nowakowski2021,Chen2022,Gadiraju2023, Wu2022}, limited efforts have been made in feature learning as well as the use of un- and self-supervised learning algorithms to alleviate missing data produced by clouds. Notable overviews and examples are provided in \cite{Yin2020,Yi2020,He2022, Dumeur2024, Wang2019}.
 
-The use of multitemporal observations of multispectral data has a strong impact in crop type classification since the spectral difference in the crop growth over time are highlighted \cite{Vuolo2018,Yi2020}.
-Each crop type has a distinct seasonal spectral behavior depending on local weather conditions \cite{Foerster2012}. 
+The use of multitemporal observations of multispectral data has a strong impact in crop type classification since the spectral difference in the crop growth over time are highlighted \cite{Vuolo2018,Yi2020, Gao2021, Maponya2020}.
+Each crop type has a distinct seasonal spectral behavior depending on local weather conditions \cite{Foerster2012,Gao2021,Russwurm2020}. 
 Therefore, many researchers center their works on making use of multi-temporal information instead of
-using single acquisition \cite{Vuolo2018, Dong2020, Hu2016, Roy2020}.
+using single acquisition \cite{Hu2016,Vuolo2018, Dong2020, Roy2020}.
 
-The most common methods for crop type classification are based on supervised learning algorithms \cite{Feng2019,Kussul2017,Cai2018,ManishLad2022,Inglada2017}. 
-The aim of these algorithms is to train a discriminative model using labeled data. However, it is complicated to find tagged datasets, 
-since it requires human accurate intervention, and normally datasets contain a huge amount of samples, which results 
-in an expensive and time consuming task. Examples of supervised machine learning (ML) models include
-decision trees (DT) \cite{Rokach2005}, random forest (RF) \cite{Breiman2001}, support vector machine (SVM) \cite{cortes1995} and artificial neural networks (ANN) \cite{Rosenblatt1958}.
+The most common methods for crop type classification are based on supervised learning algorithms \cite{Kussul2017,Inglada2017,Cai2018,Feng2019,Kumar2020,Maponya2020,Russwurm2020,Chen2022,ManishLad2022, Agilandeeswari2022,Wu2022,Gadiraju2023}. 
+The aim of these algorithms is to train a discriminative model using labeled data. However, it is complicated to find tagged datasets, since it requires human accurate intervention, and normally datasets contain a huge amount of samples, which results 
+in an expensive and time consuming task. Examples of supervised machine learning (ML) models include decision trees (DT) \cite{Rokach2005}, extreme gradient boosting (XGBoost) \cite{Chen2016}, random forest (RF) \cite{Breiman2001}, support vector machine (SVM) \cite{cortes1995}, and artificial neural networks (ANN) \cite{Rosenblatt1958}.
 The mentioned algorithms provide usually similar classification performance, but require extensive prepocessing steps such as compositing and gap-filling when incomplete (e.g., cloud-corrupted) time series are analyzed.
 
 Unsupervised algorithms, such as autoencoders (AEs), mitigate the reliance on labeled datasets, although in principle these algorithms 
 are not designed for the same purpose as supervised ones. An AE has as objective to compress data into a lower dimensional 
-space, known as code, and then reconstruct the input \cite{ML2023}.  The code is regarded to be a set of features, also called representations, 
+space, known as code, and then reconstructs the input \cite{ML2023}.  The code is regarded to be a set of features, also called representations, 
 which condense the necessary information to recover the original data \cite{LopezPinaya2020}.
 
 AEs have been widely used as change detection methods by generating representations from the reconstruction difference of 
@@ -220,47 +218,61 @@ automatically learning and identifying meaningful features from the input data. 
 
 In this work, we propose to train a light-weight deep learning model with individual time-tagged spectral signatures, while bypassing gap-filling and compositing methods.
 % to estimate missing data caused by clouds.
-In our framework, we use an ensemble of AEs to generate new informative and discriminative features for crop type classification. 
-Here, we arbitrarily chose one simple AE per class, any other number of AEs would also be possible.
-Instead of using the AE codes as representations, we calculate the respective reconstruction difference vector between the input and the output and use this concatenated reconstruction difference vector from the different AEs as representations. 
-We evaluate the perfomance of the derived representations with a simple fully connected network (FCN) using the Breizhcrops dataset \cite{Russwurm2020}. 
-We compare the outcomes against a number of competing approaches using the same dataset.
-
+In our framework, we use an ensemble of \ac{AEs} to generate new informative and discriminative features for crop type classification. 
+Here, we arbitrarily chose one simple AE per class, any other number of \ac{AEs} would also be possible.
+We calculate the \ac{AEs} reconstruction difference vectors between input and output and concatenate them to form a vector of representations. 
+We evaluate the performance of the derived representations by comparing classification performance using as input data Sentinel-2 time series and the representations generated by our method on conventional classifiers, RF, SVM, XGBoost and a simple fully connected network (FCN). In addition, we compare the outcomes against a number of complex benchmarked approaches using the same dataset.
 
 \subsection{Related work}
-Russwurm et al. \cite{Russwurm2020}, propose a satellite image time series dataset for crop type mapping named BreizhCrops. 
-They extract time series from Sentinel-2 at both pre-processing levels: top- (TOA) and bottom-of-atmosphere (BOA). 
-They then use this dataset to benchmark a series of seven classification algorithms including RF and six deep learning 
-methods based either on convolution, recurrence, or attention models for building a state-of-the-art benchmark on methods 
-for crop type mapping.
+Russwurm et al. \cite{Russwurm2020} presented a satellite image time series dataset for crop type mapping named BreizhCrops. They generated top- (TOA) and bottom-of-atmosphere (BOA) time series from Sentinel-2. This dataset is used to benchmark seven classifiers 
+% including RF and six deep learning methods based either on convolution, recurrence, or attention models for building a state-of-the-art benchmark on methods 
+for crop type mapping. 
+However, the extremely limited number of samples for certain classes, and hence class imbalance, is a major concern in this dataset, as two minority crop types have much less samples than others, limiting the model's capacity to effectively generalize to underrepresented classes, even high complexity bechmarked models as transformer and long-short term memory (LSTM).
 
-Paris et al. \cite{Paris2020} address the challenges in crop type classification, such as the presence of clouds that
-corrupts the multi-temporal spectral signature of remote sensing images and the necessity of labeled 
-samples, using Sentinel-2 time series and a Long-short term memory (LSTM) model.
+% \textbf{An issue in this work, is class imbalance, where certain crop types have significantly more samples than others, hindering the model’s ability to generalize effectively to underrepresented classes. Additionally, another challenge for this work is the noise caused by cloud coverage in Sentinel-2 imagery. To handle gaps in the time series caused by cloud interference, interpolation methods were applied. However, these methods come with disadventages, due to, they assume smooth changes between data points, which may not reflect real-world variability. THis kind of methods for avoiding the gaps can also mask important temporal variations because it requires fixed-length sequences, it reduces the model’s flexibility in handling irregular data.}
+
+Paris et al. \cite{Paris2020} 
+% addressed the presence of clouds that corrupts the remote sensing multi-temporal spectral images and the necessity of labeled samples, 
+proposed an approach based on a LSTM model.
+They addressed the problem of cloud-corrupted multitemporal data by constructing a large training dataset from three full Sentinel-2 tiles, with orbital overlap area, to create monthly composite images. However, this approach depends on reliable cloud masks and numerous cloud-clear temporal observations to generate trustworthy composites. Inaccurate cloud masks induce incorrect composite values and classification performance is compromised. Besides, the practical usage of this approach is mainly limited due to the demand for large computational resources that high complexity models require.
+% computationally expensive to train, particularly on large scales. The proposed method's practical usage may be limited due to the demand for large computational resources.
+
+% \textbf{The way that they used for solve the gaps presence in the remote sensing time series was creates a large training dataset using information form three tiles (one of them is in an overlapping zone) for creating composites images per month.  One disaventage in this work is that we depend the overlapping and with cloud clear temporal observations zones for create the composites with this information.  Even though preprocessing techniques are used to mitigate cloud effects, the presence of clouds can still degrade classification results by introducing high reflectance values, which act as outliers. Another issue in this work is the high Computational Cost, because of, LSTM network used for crop classification is computationally expensive to train, especially for large-scale areas. The need for high computational resources may limit the practical use of the proposed system in certain scenarios.}
 
 % With respect to feature selection, next to spectral and temporal features, textural and environmental features are often used to characterize the crop growth characteristics \cite{Yi2020}.
-In \cite{He2022} a method to merge spectral, textural and environmental features is proposed, with the purpose of designing a more accurate and efficient crop 
-type classification method.
+He et al. \cite{He2022} proposed a crop type classification method, trying to improve models performance by merging spectral, textural and environmental features. One major downside of this approach is that while feature learning/selection methods attempt to reduce data redundancy, combining a large number of features easily induces redundancy, affecting classification performance. 
+% Moreover, more data implies more computational cost and time. 
+Furthermore, collecting and processing these additional features is time-consuming and computationally expensive, potentially limiting the method's scalability in larger or more diverse locations. 
+% This work proposes a promising strategy for multi-crop classification; however, issues such as data complexity, class imbalance, and model sensitivity may limit its practical applicability on bigger scales or with different crop types.
+% \textbf{One disadvantages in this work is the Data Redundancy. While feature selection methods are used to reduce data redundancy, the process may still leave some unneeded features in the model, impacting performance. Other disadvantage is The reliance on a combination of spectral, textural, and environmental because of, it increases the complexity of the model. In addition, Gathering and processing these complex features can be time-consuming and computationally expensive, which may limit the method's scalability in larger or more diverse regions. In summary, while the paper presents a promising approach for multi-crop classification, challenges related to data complexity, class imbalance, and model sensitivity could affect its practical application on larger scales or with other crop types.}
 
-Swope et al. \cite{Swope2021} propose a new self-supervised training, named contrastive sensor fusion, wich is a technique 
-for learning unsupervised representations through a "Siamese network" training scheme. 
-They used shared information from multiple sensors and spectral bands by training a single model to produce a representation that remains similar 
-when any subset of its input channels is used. 
-Yuan et al. \cite{Yuan2022} propose a method called SITS-Former, that is pre-trained with unlabeled Sentinel-2 time series data to learn spatio-spectral-temporal features via a missing-data imputation proxy task based on self-supervised learning.
-Lisaius et al. \cite{Lisaius2024} use representations derived from a spectral-temporal Barlow Twin (STBT) for crop type classification and RL.
+Lisaius et al. \cite{Lisaius2024} proposed a novel representation learning approach for remote sensing data based on a twins network.
+They derive representations from a spectral-temporal Barlow Twin (STBT) and afterwards assess in crop type classification. This method uses sparse temporal sampling as the only augmentation strategy addressing cloud-corruption issues. However, the lack of additional augmentation types restricts the model capacity to manage other types of data corruption. Moreover, this method assumes that cloudy observations are totally removed from the data, which is not optimum in real-world circumstances with poor quality cloud masks.
 
-The research in \cite{Kalinicheva2019} is particularly interesting in the use of AEs. They propose an approach that uses the reconstruction
-losses of joint AEs to detect non-trivial changes (permanent changes and seasonal changes that do not follow common tendency) between two 
-co-registered images in a satellite image time series.
+Kalinicheva et al. \cite{Kalinicheva2019} proposed a particularly interesting approach with AEs. Reconstruction losses of joint AEs are used to detect non-trivial changes between two co-registered images in a satellite image time series. This method depends on patch-wise reconstruction error, and hence the approach has difficulty capturing fine features for objects that are only 1-2 pixels wide. Moreover, joint autoencoder models, particularly convolutional autoencoders, need significantly large training time, which makes the method unsuitable for real-time or large-scale applications. 
 
-An approach using AEs for unsupervised feature-learning in hyperspectral data was proposed in \cite{Windrim2019}.
-The method permits to evaluate the separability of the feature spaces for clustering tasks.
+% The research of Kalinicheva et al. \cite{Kalinicheva2019} is particularly interesting in the use of AEs. They propose an approach that uses the reconstruction losses of joint AEs to detect non-trivial changes (permanent changes and seasonal changes that do not follow common tendency) between two co-registered images in a satellite image time series. The suggested method faces considerable challenges in identifying changes in small linear objects like highways or tram lines. Because it depends on patch-wise reconstruction error, the approach has difficulty capturing fine features for objects that are only 1-2 pixels wide. Furthermore, because of their complexity, joint autoencoder models, particularly convolutional autoencoders, need a significant amount of training time. This renders the method unsuitable for real-time or large-scale applications that require quick processing. 
+
+% The datasets utilized for pretraining and evaluation are limited to certain geographical areas, hence, the model's capacity to generalize to other locations with different crops and climate conditions may necessitate more research and fine-tuning.
+
+% Swope et al. \cite{Swope2021} propose a new self-supervised training, named contrastive sensor fusion, wich is a technique for learning unsupervised representations through a "Siamese network" training scheme. They used shared information from multiple sensors and spectral bands by training a single model to produce a representation that remains similar when any subset of its input channels is used. The method is based on the fusion of multi-sensor data, which adds complexity to processing and matching data from several sources with differing resolutions and spectral bands. The strategy employs huge datasets and computationally expensive methodologies, making it resource-intensive and potentially unworkable for smaller research teams who lack access to comparable computer equipment.
+% \textbf{The method relies on the fusion of multi-sensor data, which introduces complexity in processing and aligning data from different sources with varying resolutions and spectral bands. The approach uses large datasets and computationally expensive techniques, this makes the method resource-intensive and potentially impractical for smaller research teams without access to similar computational infrastructure.}
+
+% Yuan et al. \cite{Yuan2022} propose a method called SITS-Former, that is pre-trained with unlabeled Sentinel-2 time series data to learn spatio-spectral-temporal features via a missing-data imputation proxy task based on self-supervised learning. This method must process each pixel individually during inference time, which is time-consuming for mapping large areas. It uses a transformer-based design, which is more complex and resource-intensive than traditional machine learning models. This can lead to higher computing costs and more difficulties while training and deploying the model in resource-constrained contexts. Although the model employs self-supervised learning to reduce the demand for labeled data, the pre-training method still necessitates a considerable amount of unlabeled data to achieve good performance. The model's scale and complexity may present difficulties for applications demanding real-time processing or with limited computing resources. 
+% \textbf{The model proposed in this paper (SITS-Former) needs to process every pixel individually at inference time, which is very time consuming when mapping large areas. The model relies on a transformer-based architecture, which is more complex and resource-intensive compared to traditional machine learning models like Random Forest or Support Vector Machines (SVM). This can result in higher computational costs and increased difficulty in training and deploying the model in resource-constrained environments. Although the model uses self-supervised learning to mitigate the need for labeled data, the pre-training process still requires large amounts of unlabeled data to achieve high performance. Gathering and processing such datasets can be time-consuming and may not always be feasible for all applications. The model’s size and complexity may pose challenges for applications requiring real-time processing or deployment on edge devices with limited computational resources. The use of transformers with multiple layers and attention heads could slow down the inference time. These factors may reduce the practicality of the SITS-Former in certain real-world applications, despite its strong performance on benchmark datasets.}
+
+% Lisaius et al. \cite{Lisaius2024} use representations derived from a spectral-temporal Barlow Twin (STBT) for crop type classification and RL. The study uses sparse temporal sampling as the only augmentation strategy for coping with cloud corruption. While this strategy increases model resistance to missing data, the absence of additional augmentation kinds may restrict the model's capacity to manage other types of data corruption. The method assumes that cloudy observations are totally eliminated from the data, it may not always be practical or optimum in real-world circumstances with poor cloud masks, potentially resulting in the loss of important data. The datasets utilized for pretraining and evaluation are limited to certain geographical areas, hence, the model's capacity to generalize to other locations with different crops and climate conditions may necessitate more research and fine-tuning.
+% \textbf{The study relies primarily on sparse temporal sampling as the only augmentation technique for dealing with cloud corruption. While this technique improves model robustness to missing data, the lack of other augmentation types could limit the model’s ability to handle different forms of data corruption. The approach assumes that cloudy observations are completely removed from the data. This strategy may not always be feasible or optimal in real-world scenarios where cloud masks are imperfect, leading to potential loss of useful data. The datasets used for pretraining and evaluation are specific to certain geographic regions. The model’s ability to generalize to other regions with different agricultural practices and climatic conditions may require further investigation and fine-tuning.}
+
+% The research of Kalinicheva et al. \cite{Kalinicheva2019} is particularly interesting in the use of AEs. They propose an approach that uses the reconstruction losses of joint AEs to detect non-trivial changes (permanent changes and seasonal changes that do not follow common tendency) between two co-registered images in a satellite image time series. The suggested method faces considerable challenges in identifying changes in small linear objects like highways or tram lines. Because it depends on patch-wise reconstruction error, the approach has difficulty capturing fine features for objects that are only 1-2 pixels wide. Furthermore, because of their complexity, joint autoencoder models, particularly convolutional autoencoders, need a significant amount of training time. This renders the method unsuitable for real-time or large-scale applications that require quick processing. 
+% \textbf{The proposed approach struggles with detecting changes in linear objects like roads or tram lines, especially when they are narrow. Since the method uses patch-wise reconstruction error, it fails to detect objects that span only 1-2 pixels in width, as the patch size might be too large to capture such fine details. Joint autoencoder models, especially convolutional autoencoders, require a substantial amount of time for training. This makes the approach less suitable for real-time or large-scale applications where rapid processing is necessary. The joint convolutional autoencoder architecture is more complex and computationally expensive compared to other change detection methods. This increases both the training time and the resource requirements, which might limit its practical use.
+% }
+
+Windrim et al. \cite{Windrim2019} proposed an approach using AEs for unsupervised feature-learning with hyperspectral data. The method allows to evaluate the separability of the feature spaces for clustering tasks. Hyperspectral data are naturally high-dimensional, and this work recognizes that high-dimensional data present issues such as greater data variability and computational complexity. 
+% While the study emphasizes brightness invariance as a positive, it can also be a drawback in some situations. The spectral angle-based approaches may fail to capture significant differences in spectral magnitude, which are frequently required to differentiate between distinct land cover types or material qualities.
+% \textbf{Hyperspectral data are inherently high-dimensional, and this paper acknowledges that high-dimensional data can lead to challenges such as increased data variability and computational complexity. While the paper highlights brightness invariance as a strength, this can also be a limitation in some cases. The spectral angle-based methods might fail to capture important variations in spectral magnitude, which are sometimes necessary to distinguish between different land cover types or material properties.}
 
 % Images from optical sensors are often contaminated with clouds and shadows \cite{Paris2020}. Therefore, it is necessary 
-To address the problem of missing data, other techniques in the state, such as the ones based on combination of optical and SAR data \cite{Begue2018, Orynbaikyzy2019, Kussul2017}, 
-fusion of multiple sensors \cite{PierrePott2022, Heupel2018,MorenoMartinez2020} or data interpolation \cite{Russwurm2020, Kandasamy2013} have been developed.
-It is worth mentioning that sensor combination/fusion implies the enormous challenge of handling huge amounts of data,
-which leads to higher computational load and increases in processing time.
 
 \begin{table}[H]
 	\caption{Summary of relevant works related to crop types classification and representation learning.}
@@ -273,7 +285,7 @@ which leads to higher computational load and increases in processing time.
 		Kalinicheva, E., et al, (2019)[19] \cite{Kalinicheva2019}. &  SPOT-5 & \makecell{2002\\2008} & AEs & Not specified & N/A \\ \hline
 		Windrim, E., et al, (2019)[42] \cite{Windrim2019}. &  \makecell{AVIRIS\\and\\others} & Not specified & AEs & Not specified & N/A \\ \hline		
 		Paris, Claudia, et al (2020)[13] \cite{Paris2020}. & S2 & \makecell{09/2017 \\ 08/2018} & LSTM & 12 & N/A \\ \hline
-		Russwurm, Marc, et al. (2020)[65]. \cite{Russwurm2020}& S2 & \makecell{01/01/2017 \\ 31/12/2017}& \makecell{RF\\and\\others} & 9 & N/A \\ \hline
+		Russwurm, Marc, et al. (2020)[65]. \cite{Russwurm2020}& S2 & \makecell{01/01/2017 \\ 31/12/2017}& \makecell{ANNs} & 9 & N/A \\ \hline
 		Zhiwei Yi, et al. (2020)[56]. \cite{Yi2020}& S2 & \makecell{23/04/2019 \\ 20/09/2019}& RF & 8 & \makecell{Spectro\\temporal} \\ \hline
 		Shan He, et al. (2022)[3]. \cite{He2022} & MODIS & \makecell{01/01/2009 \\ 31/12/2009} & KS & 4 & \makecell{Spectral \\ textural \\ environmental} \\ \hline
 		Leikun Yin, et al. (2020)[35]. \cite{Yin2020}& S2 & \makecell{01/04/2018 \\ 31/10/2018} & RF & 3 & \makecell{Spectro \\ temporal} \\ \hline
@@ -281,6 +293,10 @@ which leads to higher computational load and increases in processing time.
 		\textbf{Proposal in this work} & S2 & \makecell{01/01/2017 \\ 31/12/2017} & AEs & 9 & N/A \\ \hline
 	\end{tabular}}
 \end{table}
+Other approaches in the state of the art address the problem of missing data with combination of optical and SAR data \cite{Begue2018, Orynbaikyzy2019, Kussul2017, Tariq2022}, 
+fusion of multiple sensors \cite{PierrePott2022, Heupel2018,MorenoMartinez2020}, data interpolation \cite{Russwurm2020, Kandasamy2013} or simply using only a subset of partially cloud free observations as Zhiwei et al \cite{Yi2020} and Shan et al \cite{He2022}.
+
+In summary, major issues in the state of the art methods are: 1) high complexity models, 2) infeasibility to scale to large areas, 3) the use of interpolation methods, 4) dependency on reliable cloud masks, and 5) handling of huge amount of data. Most of the machine learning-based approaches need extremely deep models leading to high computational costs and processing time, and therefore limiting scalability to process large areas of interest. Approaches that rely on interpolation methods have negative aspects since they assume smooth changes between data points, which not accurately reflects real-world variability. It also underestimates essential changes in time because it requires fixed-length sequences, which restricts the model's flexibility in dealing with irregular inputs. Sensor fusion / combination approaches implies the enormous challenge of handling huge amounts of data, which leads to high computational load and increases in processing time. 
 
 \subsection{Contributions}
 The main contributions of this work are the following:
@@ -301,30 +317,35 @@ Sections 5 and 6 present the discussion and conclusions, respectively, of the re
 Representation learning, also called feature learning, is a subfield of machine learning
 %RL is the process of deriving a representation from input data tailored to specific tasks, it involves extracting significant information to connect low-level data with higher-level semantic concepts \cite{Tzelepi2022}.
 %\textcolor{orange}{"It refers to the process of learning a representation from an input object toward a specific task" \cite{Tzelepi2022}.} 
-that aims to automatically learn and identify meaningful features, or representations, from the input data.
-Representations are expected to be more informative for downstream tasks such as clustering, regression, or classification \cite{Tzelepi2022}. 
+that aims to automatically learn and identify meaningful features, or representations, from the input data. Representations are expected to be more informative for downstream tasks such as clustering, regression, or classification \cite{Tzelepi2022}.
+
+In crop type classification, \ac{RL} provides various benefits, especially in agricultural applications, where managing high-dimensional and complex dataset is crucial \cite{Reichstein2019}. First, it learns hierarchical features, beginning with low-level details such as edges and textures and advancing to higher-level characteristics like specific crop patterns. This hierarchy is critical for differentiating between different crop varieties \cite{Kussul2017}. In addition, its potential to reduce large labeled datasets, which tend to be costly and time-consuming to produce in agriculture.
+
+Therefore, the \ac{RL} improves crop classification by automating feature extraction, enhancing generalization, reducing the need for large labeled datasets, and adjusting to environmental variability. With its scalability, speed, and capacity to combine geographical and temporal data, it is an effective tool for developing robust, accurate, and scalable crop classification models.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=9cm]{figures/representation_learning.pdf}
-	 \caption{Illustration of RL as a function $f$, mapping vectors from a dimensional space to a representation space.}
+	 \caption{Illustration of representation learning (RL) as a function $f$, mapping vectors from a dimensional space to a representation space.}
 	\label{}      
 	\centering
 \end{figure}
 
-Mathematically, RL is defined as a function $f : \mathbf{X} \to \mathbf{Z}$, that transforms the input data $\mathbf{X} = \{\mathbf{x}_1, \dots, \mathbf{x}_S\}$, into features $\mathbf{Z} = \{\mathbf{z}_1, \dots, \mathbf{z}_S\}$, where each vector $\mathbf{x}_s \in \mathbb{R}^n$ and its image $\mathbf{z}_s \in \mathbb{R}^p$, and $\mathbb{R}^p$ denotes the representation space.
+Mathematically, \ac{RL} is defined as a function $f : \mathbf{X} \to \mathbf{Z}$, that transforms the input data $\mathbf{X} = \{\mathbf{x}_1, \dots, \mathbf{x}_S\}$, into features $\mathbf{Z} = \{\mathbf{z}_1, \dots, \mathbf{z}_S\}$, where each vector $\mathbf{x}_s \in \mathbb{R}^n$ and its image $\mathbf{z}_s \in \mathbb{R}^p$, and $\mathbb{R}^p$ denotes the representation space.
 The objective function $f$ leads the model to learn meaningful representations of the input data, preserving information, reducing redundancy and generally reducing dimensionality.
 
-In recent years, many RL methods have been proposed from different perspectives / families \cite{Balestriero2023}, 
+In recent years, many \ac{RL} methods have been proposed from different perspectives and families \cite{Balestriero2023}, 
 e.g., contrastive learning methods (InfoNCE \cite{Tschannen2019,LeKhac2020,Aitchison2021}), deep metric learning (SimCLR \cite{Chen2020,Bachman2019}, NNCLR \cite{Dwibedi2021}, etc.), non-contrastive methods (VICReg \cite{Bardes2021}, BarlowTwins \cite{Zbontar2021,Lisaius2024}, etc), among others.
 Such approaches are particularly useful in cases where the observed data is generated by a limited set of variables \cite{Coifman2006}. 
-However, RL is not limited to these families of methods, and conventional neural network models, such as autoenconders can form a representation 
-learning method.
+However, \ac{RL} is not limited to these families of methods, and conventional neural network models, such as autoenconders can form a representation learning method.
 
 \subsection{Autoencoders}\label{aes}
-AEs are a specific type of ANN used for unsupervised learning (Figure \ref{AEs_example}) \cite{Bank2020}. They have applications in various research fields, such as anomaly detection, 
-data compression, and feature learning. Their aim is to encode the input into a compressed representation, and then reconstruct the input from this representation, so that the reconstruction is as similar as possible to the input \cite{Tzelepi2022,Zhang2019}. 
-Both under- and overcomplete versions exist, as well as variational AE \cite{Valero2021}.
+Autoencoders are a specific type of ANN used for unsupervised learning (Figure \ref{AEs_example}) \cite{Bank2020, Bank2023}. They have applications in various research fields, such as anomaly detection, data compression, and feature learning. Their aim is to encode the input into a compressed representation, and then reconstruct the input from this representation, so that the reconstruction is as similar as possible to the input \cite{Tzelepi2022,Zhang2019}. 
+Both under- and overcomplete versions exist, as well as variational AE \cite{Valero2021}. 
+
+Although \ac{AEs} are not in principle designed for detection and classification tasks, several works have demonstrated their potential to ease these tasks by using \ac{AE}-derived data for change detection and binary classification models \cite{LopezFandino2018,Luppino2024,Kalinicheva2019}. Since \ac{AEs} are trained to compress and afterwards reconstruct the input data, they basically learn to model samples belonging to a certain joint distribution, leading the model to learn class-specific properties.
+
+% Also, It has the capacity to adapt to changing environmental circumstances, which is critical in agriculture owing to the variability caused by factors like as seasonal shifts and weather conditions \cite{Ienco2017, Russwurm2018}. 
 
 % The AEs are composed by the following elements:
 % \begin{itemize}
@@ -338,12 +359,13 @@ Both under- and overcomplete versions exist, as well as variational AE \cite{Val
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm]{figures/autoencoder_methodology.pdf}
-	 \caption{Example of an AE architecture with mathematical definition as a function. In the present work, not the codes are used as representations, but the recostruction difference between input and output.}
+	 \caption{Example of an autoencoder architecture with mathematical definition as a function. In the present work, not the codes are used as representations, but the reconstruction difference between input and output.}
 	\label{AEs_example}      
 	\centering
 \end{figure}
+Self-supervised learning techniques, such as \ac{AEs}, enable models to be pre-trained on unlabeled data, reducing reliance on labeled datasets \cite{Ghanbarzadeh2024}. Furthermore, data augmentation techniques (rotations, translations, etc.) applied in these type of models have proven to improve performance without increasing the amount of training data \cite{Russwurm2018, Zhong2019, Zbontar2021}. 
 
-The aim of the AEs, formally defined in \cite{Baldi2012}, is to learn  the functions $f_{E}: \mathbb{R}^{n} \to \mathbb{R}^{p} $ and $f_{D}: \mathbb{R}^{p} \to \mathbb{R}^{n}$, where $f_{E}$ denotes the encoder function, $f_{D}$ is the decoder function, $n$ is the input and output dimension, and $p$ denotes the dimension of the code.
+The aim of the \ac{AEs}, formally defined in \cite{Baldi2012}, is to learn  the functions $f_{E}: \mathbb{R}^{n} \to \mathbb{R}^{p} $ and $f_{D}: \mathbb{R}^{p} \to \mathbb{R}^{n}$, where $f_{E}$ denotes the encoder function, $f_{D}$ is the decoder function, $n$ is the \hl{dimension of the input and output spaces}, and $p$ denotes the dimension of the \hl{code space}.
 Generally $p \ll n$, leading to learn compressed features of the data. 
 % A characteristic of the AEs is that they are trained gradually layer by layer, therebefore, each hidden layer is seen as a regression model.
 
@@ -429,72 +451,77 @@ Generally $p \ll n$, leading to learn compressed features of the data.
 % 	\caption{}
 % \end{table}
 
-\section{Problem statement and proposed method}
-Consider a multi-spectral multi-temporal dataset acquired by an optical sensor, where each sample has been acquired at different times. From the entire set of observations, only a subset will usualy be useful as climate conditions such as clouds, cirrus, cloud shadows, snow, among others, occasionally obstruct the land surface. 
-Missing data produced by these conditions commonly leads to poor perfomance on particular tasks, such as land use / land cover classification or change detection.
+\section{Proposed method}
+Consider a multi-spectral multi-temporal dataset acquired by an optical sensor, \hl{i.e.,} each sample has been acquired at different times. From the entire set of observations, only a subset will \hl{usually} be useful as \hl{weather} conditions such as clouds, cirrus, cloud shadows, snow, among others, occasionally obstruct the land surface. 
+Missing data produced by these conditions commonly leads to poor performance on particular tasks, such as land use / land cover classification or change detection.
 Therefore, it is of utmost importance to extract and  use only the land related information, either by filtering the data, or generating new features (often in the form of composites).
 
-\subsection{Mathematical formulation}
+\subsection{Problem statement}
 Let $\mathscr{X} \in \mathbb{R}^{P \times B \times T}$ be a multispectral time series dataset represented as a third-order array, where $P$ represents the number of geographic points on the earth surface, $B$ is the number of spectral bands, and $T$ denotes the number of temporal observations, and each geographic point is denoted as a vector $\mathbf{x} \in \mathbb{R}^{B \cdot T}$ and $\mathbf{x} \in \mathscr{X}$. The aim is to transform each vector $\mathbf{x}$ into a representation vector $\mathbf{z} \in \mathbb{R}^{R}$, where $R$ is the number of new features named representations, to address label scarcity and missing data produced by clouds, and to alleviate tasks such as crop type classification (See Figure \ref{bigpicture}).
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm]{figures/bigpicture_with_clement.pdf}
-	\caption{First level proposed workflow. Scene classification product provided by the European Space Agency (ESA) is used to mask out cloudy samples from a geographic point (pixel) shaped as a $T \times B$ array. The pixel cloud free observations are the inputs to generate a representations vector, which is a concatenation of the reconstruction differences per AE, and are then the input data to a classification model.}
+	\caption{First level of the proposed workflow. Scene classification product provided by the European Space Agency (ESA) is used to mask out cloudy samples from a geographic point (pixel) shaped as a $T \times B$ array. 
+    % The pixel cloud free observations are the inputs to generate a representations vector, which is a concatenation of the reconstruction differences per autoencoder, and are then the input data to a classification model.
+    }
 	\label{bigpicture}
 	\centering
 \end{figure}
 
 \subsection{Methodology}
 The methodolgy of this work consists of four processes: data downloading/prepocessing, model training, inference (representations formation) and, as downstream task, classification. The proposed framework is shown in more detail in Figure \ref{abstract}.
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figures/abstract.pdf}
 	\caption{Proposed framework block diagram. The full methodology is composed by four main blocks: data preprocessing, model training, representation generation and evaluation.} 
 	\label{abstract}
 \end{figure}
 \subsubsection{Data downloading/preprocessing}\label{data_preprocessing}
-Reference, crop type labels were extracted from a public benchmark dataset named BreizCrops \cite{Russwurm2020} (field level).
+Reference crop type labels were extracted from a public benchmark dataset named BreizCrops \cite{Russwurm2020} (field level).
 Google earth engine (GEE) was used to download full multitemporal multispectral data from a region of interest (ROI) (see Figure \ref{GEE_process}). \\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/gee_download.pdf}
-	\caption{Process of downloading datasets using the GEE API.}
+	\caption{Dataset downloading process using the google earth engine (GEE) database.}
 	\label{GEE_process}    
 \end{figure}
 
 Given the multispectral multitemporal remote sensing dataset, a scene classification product (e.g., sen2cor) is used to get a cloud/non-cloud mask for each sample $\mathbf{x}$, i.e., for each temporal observation at pixel level.
-Cloudy samples are excluded from the dataset producing a set of pixels with variable number of cloud free temporal observations.
+Cloudy samples are excluded from the dataset \hl{raising} a set of pixels with variable number of cloud free temporal observations. \hl{Hence, only the cloud free observations of a pixel are the inputs to generate a representations vector by averaging only available observations, which makes our model flexible and independent on the number of clear observations.}
 
-To leverage the temporal information for the particular task of crop type classification, we add temporal embeddings to each sample, which aim to extend the vector space to one where similar spectral curves of different crop types at different growth stages are separable.
+To leverage the temporal information for the particular task of crop type classification, we add temporal embeddings to each sample, which aim to extend the vector space to one where similar spectral curves of different crop types at different growth stages are separable. 
+We use the sine and cosine functions to model the annual periodic phenomenon presented by the cyclical character of the nature seasons and crops evolution between planting and harvest. As day 1 and 365 are in principle distant but with similar natural conditions, we scaled the acquisition day-of-year (\ac{DOY}) to (0, 1) range dividing by 365 and then place them on a real value scale by computing the sine and cosine. This makes each scaled \ac{DOY} a unit vector decomposed into two orthogonal vectors, regarded as spring–fall axis (sine), and summer–winter axis (cosine) giving to our method the capacity to perform correctly in different earth latitudes \cite{Dahlin2016}.
+
 Hence, each sample $\mathbf{\tilde{x}} \in \mathbb{R}^F$
-has $F$ features, i.e., $B$ spectral bands plus two values denoting the sensing Day Of Year (DOY), and are computed, given the cyclical character of the nature seasons, using sin and cosine functions as follows
+has $F$ features, i.e., $B$ spectral bands plus two values denoting the sensing doy, computed as follows
 \begin{equation}
-	d_{\sin} = \left(\sin\left(\frac{2\pi d}{365}\right)+1\right)/2
+	doy_{\sin} = \left(\sin\left(\frac{2\pi doy}{365}\right)+1\right)/2
 \end{equation}
 and
 \begin{equation}
-	d_{\cos} = \left(\cos\left(\frac{2\pi d}{365}\right)+1\right)/2, 
+	doy_{\cos} = \left(\cos\left(\frac{2\pi doy}{365}\right)+1\right)/2, 
 \end{equation}
-where $d$ denotes the DOY as a numeric value from 1 to 365, and $d_{\sin}$ and $d_{\cos}$ are in the range 0 to 1.
+where $doy$ denotes the \ac{DOY} as a numeric value from 1 to 365, and $doy_{\sin}$ and $doy_{\cos}$ are in the range 0 to 1.
 	% \item Inference: In this part of the proposed framework,the representations are generated using the AEs trained. Given as a input individual temporal observation free of clouds to the AEs, after that, generating the recostruction and computing the error beteween input and recostruction, deleting the day of the year (DOY) and computing the average per pixel to generate the representations $\mathbf{Z}$.
 	% \item Evaluation: There are two option, the first is to use distance metrics for evaluate the separability between classes and the second is to do a classification using a FCN and after that evaluate the prediction usign metrics for performance evaluation.
 
 \subsubsection{Model training}
-The principle of this work is to train a set of $C$ independent autoenconders with vectors $\mathbf{\tilde{x}}_c$ that belong to a particular class/cluster $c$ for $c=1,\dots,C$,  resulting in $C$ semi-supervised trained models able to reconstruct samples from the same class/cluster, approaching the reconstruction difference to zero, while using the ensemble of reconstruction differences to derive the representations (see Figure \ref{errors}).
+The principle of this work is to train a set of $C$ independent AEs with vectors $\mathbf{\tilde{x}}_c$ that belong to a particular class/cluster $c$ for $c=1,\dots,C$,  resulting in $C$ semi-supervised trained models able to reconstruct samples from the same class/cluster, approaching the reconstruction difference vector to zero, while using the ensemble of reconstruction difference vectors to derive the representations (see Figure \ref{errors}).
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{figures/AE_example_corrected.pdf}
-	\caption{Example of the expected output for positive and negative samples. The "errors" from the ensemble of AEs constitute the representations for the downstream task.}
+	\caption{Example of the expected output for positive and negative samples. The "difference" from the ensemble of autoencoders (AEs) constitute the representations for the downstream task.}
 	\label{errors}
 \end{figure}
-The training process can be semi-supervised, given a labeled dataset, as in this work, or unsupervised, with no ground truth data (e.g., by training a set of random AEs not associated to specific crop types or classes). 
+The training process can be semi-supervised, given a labeled dataset, as in this work, or unsupervised, with no ground truth data (e.g., by training a set of random \ac{AEs} not associated to specific crop types or classes). 
 The scope of this work addresses the semi-supervised approach, with a crop type labeled dataset as pairs $(x,y)$, where $y$ is an integer value which indicates the class that $x$ belongs to. Samples are split in as many subdatasets as classes and each subdataset is used to train a different AE.
-This approach is graphically represented in Figure \ref{aes_train}. 
+This process is graphically represented in Figure \ref{abstract} as model training and further illustrated in Figure \ref{aes_train}.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/training.pdf}
-	\caption{AEs training. Each AE is trained with a set of individual spectral curves belonging to one of the crop types. The reconstructions from the $C$ classes are used to calculate the difference vector across the ensemble, that is the final set of representations.}    
+	\caption{Autoencoders (AEs) training. Each autoencoder is trained with a set of individual spectral curves belonging to one of the crop types. The reconstructions from the $C$ classes are used to calculate the difference vector across the ensemble, that is the final set of representations.}    
 	\label{aes_train}      
 \end{figure}
 
@@ -503,7 +530,7 @@ As mentioned in Section \ref{aes}, an AE is formally defined as a composed funct
 	f(\mathbf{\tilde{x}}_c) = f_D(f_E(\mathbf{\tilde{x}}_c)))
 \end{equation}
 where, $f_E(\mathbf{\tilde{x}}_c)$ denotes the encoder function, which maps the input vectors that belong to class $c$, from the input space $\mathbb{R}^F$ to an embedding space $\mathbb{R}^P$, known as code,
-and, at the same time, it is a composed function
+and, at the same time, is a composed function of the hidden layers $f_{E_i}$
 \begin{equation}
 	f_E(\mathbf{\tilde{x}}_c) = f_{E_{I}}(f_{E_{I-1}}(\dots (f_{E_{1}}(\mathbf{\tilde{x}}_c))))
 	\label{composed}
@@ -514,19 +541,19 @@ where $f_{E_{i}}(\cdot)$, for $i = 1, \dots, I$ are regression functions
 \end{equation}
 where $i$ denotes the layer number, $\mathbf{y}_{i-1}$ stands for the output of layer $i-1$, $\mathbf{W}_{i}$ and $\mathbf{b}_{i}$ denotes the weights and bias at layer $i$ respectively, and $\alpha_i$ the activation function.
 
-The decoder function $f_D(\cdot)$, also a composed function as $f_E(\cdot)$ in eq. \ref{composed}, maps the code to a estimated reconstruction
+The decoder function $f_D(\cdot)$, also a composed function as $f_E(\cdot)$ in eq. \ref{composed}, maps the code to \hl{an} estimated reconstruction of the input vector by
 \begin{equation}
 	\mathbf{\hat{x}} = f_{D}(f_E(\mathbf{\mathbf{\tilde{x}}}_c))
 \end{equation}
-which is approximated to the input, updating the weights $\mathbf{W}_i$ and bias $\mathbf{b}_i$ by backpropagating the error $\mathbf{d}$ computed by a loss function $L$ as
+where $\mathbf{\hat{x}}$ is \hl{the approximation of} the input \hl{vector}, updating the weights $\mathbf{W}_i$ and bias $\mathbf{b}_i$ by backpropagating the loss $d$ computed by a loss function $L$ as
 \begin{equation}
-	\mathbf{d} = L(\mathbf{\tilde{x}}_c, f_D(f_E(\mathbf{\tilde{x}}_c))) = L(\mathbf{\tilde{x}}_c, \mathbf{\hat{x}})
+	d = L(\mathbf{\tilde{x}}_c, f_D(f_E(\mathbf{\tilde{x}}_c))) = L(\mathbf{\tilde{x}}_c, \mathbf{\hat{x}})
 	\label{loss}
 \end{equation}
-where $L$ computes the distance between $\mathbf{\tilde{x}}_c$ and $\mathbf{\hat{x}}$, and $\mathbf{W}_i$ and $\mathbf{b}_i$ are updated approaching $\mathbf{d} \to \mathbf{0}$, by an optimization algorithm such as stochastic gradient descent, Adam, Adagrad.
+where $L$ computes the distance between $\mathbf{\tilde{x}}_c$ and $\mathbf{\hat{x}}$, and $\mathbf{W}_i$ and $\mathbf{b}_i$ are updated approaching $d \to 0$, by an optimization algorithm such as stochastic gradient descent, Adam or Adagrad.
 
-\subsubsection{Inference (representations formation)}
-Given the $C$ trained AEs, denoted as $f_c$, the set of cloud free observations of individual geographic points (pixels) form an array $\mathbf{\tilde{X}} \in \mathbb{R}^{t \times F}$, where $t$ denotes the number of cloud free samples for a given pixel. $\mathbf{\tilde{X}}$ is the input to all the AEs, and the reconstruction array is obtained from each AE as
+\subsubsection{Representations generation (Inference)}
+Given the $C$ trained \ac{AEs}, denoted as $f_c$, the set of cloud free observations of individual geographic points (pixels) form an array $\mathbf{\tilde{X}} \in \mathbb{R}^{t \times F}$, where $t$ denotes the number of cloud free samples for a given pixel. $\mathbf{\tilde{X}}$ is the input to all the \ac{AEs}, and the reconstruction array is obtained from each AE as
 \begin{equation}
 	\mathbf{\hat{X}}_c = f_c(\mathbf{\tilde{X}}) 
 \end{equation}
@@ -534,11 +561,11 @@ where $\mathbf{\hat{X}}_c$ represents the reconstruction estimated by AE $c$. Th
 \begin{equation}
     \mathbf{D}_c = L(\mathbf{\tilde{X}}, \mathbf{\hat{X}}_c)
 \end{equation}
-and the pixel mean reconstruction difference $\mathbf{\bar{d}}_c$ is computed by
+and the pixel mean reconstruction difference vector $\mathbf{\bar{d}}_c$ is computed by
 \begin{equation}
 	\mathbf{\bar{d}}_c = \frac{1}{t}\sum_{s=0}^{t}\mathbf{d}_{sc}
 \end{equation} 
-where $\mathbf{d}_{sc}$ denotes the $s$-th row of $\mathbf{D}_c$ and the representations are formed by concatenating the mean pixel reconstruction erros as
+where $\mathbf{d}_{sc}$ denotes the $s$-th row of $\mathbf{D}_c$ and the representations are formed by concatenating the mean pixel reconstruction difference vector as
 \begin{equation}
     \mathbf{z}=\mathbf{\bar{d}}_1 \oplus \mathbf{\bar{d}}_2 \oplus \cdots \oplus \mathbf{\bar{d}}_C
 \end{equation}
@@ -547,23 +574,22 @@ The inference phase of our proposed framework is presented in Figure \ref{Infere
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figures/testing.pdf}
-	\caption{Inference workflow of the proposed framework. For each temporal set of cloud-free reflectance spectra, the average reconstruction errors are calculated for each of the $C$ AEs and concatenated to define the representations of this pixel.}
+	\caption{Inference workflow of the proposed framework. For each temporal set of cloud-free reflectance spectra, the average reconstruction difference vector are calculated for each of the $C$ autoencoders (AEs) and concatenated to define the representations of this pixel.}
 	\label{Inference}    
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Experiments}
+\section{Experimental results}
 \subsection{Dataset}\label{dataset}
-For this work the Breizhcrops dataset \cite{Russwurm2020} was used for experiments and evaluation. The provided multi-temporal multi-spectra data is from the Brittany region in the northwest of France and is composed of labeled Sentinel-2 images from January 1st to December 31st, 2017. Labels are assigned to the "average of reflectance values over the bounds of the field geometry retrieved from the dataset" \cite{Russwurm2020}.
+For this work the public benchmark dataset \textit{Breizhcrops} presented in \cite{Russwurm2020} was used for experiments and evaluation. This dataset is available at the GitHub repository
+(\url{https://github.com/dl4sits/breizhcrops}). The provided multi-temporal multi-spectra data is from the Brittany region in the northwest of France and is composed of labeled Sentinel-2 images from January 1st to December 31st, 2017. Labels are assigned to the "average of reflectance values over the bounds of the field geometry retrieved from the dataset" \cite{Russwurm2020}.
 
 This dataset is organized in four regions (see Table \ref{Regions}),
 % by the "Nomenclature des Unités Territoriales Statistiques" (NUTS) system (see Table \ref{Regions}): Côtes-d’Armor (FRH01), Finistère (FRH02), Ille-et-Vilaine (FRH03),and Morbihan (FRH04)
 and each region contains nine crop categories: barley, wheat, rapeseed, corn, sunflower, orchards, nuts, permanent meadows and temporary meadows.
-To allow for a direct comparison to the work published in \cite{Russwurm2020}, we use the regions FRH01 and FRH02 for training, FRH03 for validation, and FRH04 for evaluation.
-The data split is described in Table \ref{data_split}, which outlines the features employed in this experiment. These include DOY (sin and cosine), 10 spectral bands (10 and 20 meters resampled to 10m) and five well-known spectral indices (NDWI, NDVI, NDTI, NDSVI and EVI).
+To allow a direct comparison to the work published in \cite{Russwurm2020}, we use the regions FRH01 and FRH02 for training, FRH03 for validation, and FRH04 for evaluation.
+% The data split is described in Table \ref{data_split}, which outlines the features employed in this experiment. These include DOY (sin and cosine), 10 spectral bands (10 and 20 meters resampled to 10m) and five well-known spectral indices (NDWI, NDVI, NDTI, NDSVI and EVI).
 
-Table \ref{samples} describes the number of samples per class used for training, validation and test respectively.
-It is worth noting that the dataset is imbalanced, i.e., each class has different number of samples. This makes the classification model more sensitive to overfitting and also makes an accuracy evaluation more difficult \cite{Foody2002}.
 % \begin{table}[H]
 % 	\caption{Regions of Britany with number of field parcels and time series for the atmospherically corrected surface reflectances at the bottom-of-atmosphere (L2A) \cite{Russwurm2020}.}
 % 	\centering
@@ -582,7 +608,7 @@ It is worth noting that the dataset is imbalanced, i.e., each class has differen
 % 	\label{Regions}
 % \end{table}
 \begin{table}[H]
-	\caption{Regions of Britany (France) with number of field parcels and spectral data for the atmospherically corrected surface reflectances at the bottom-of-atmosphere (L2A) \cite{Russwurm2020}. The regions FRH01 and FRH02 were used for training, FRH03 for validation, and FRH04 for evaluation.}
+	\caption{Regions of Brittany (France) with number of field parcels and spectral data for the atmospherically corrected surface reflectances at the bottom-of-atmosphere (L2A) \cite{Russwurm2020}. The regions FRH01 and FRH02 were used for training, FRH03 for validation, and FRH04 for evaluation.}
 	\begin{minipage}[b]{.4\linewidth}
 		\small
 		\begin{tabular}{c  c  c} 
@@ -604,6 +630,10 @@ It is worth noting that the dataset is imbalanced, i.e., each class has differen
 		\includegraphics[width=0.9\linewidth]{figures/breizhCrops_regions_black.pdf}
 	  \end{minipage}
 \end{table}
+
+Table \ref{samples} describes the number of samples per class used for training, validation and test respectively.
+It is worth noting that the dataset is imbalanced, i.e., each class has different number of samples. This makes the classification model more sensitive to overfitting and also makes an accuracy evaluation more difficult \cite{Foody2002}.
+
 \begin{table}[H]
 	\centering
 	\caption{Number of samples per class used for training, validation and test.}
@@ -614,7 +644,7 @@ It is worth noting that the dataset is imbalanced, i.e., each class has differen
 		\hline
 		Barley			& 23,787		& 7,154			& 5,981		& 36,922 \\
 		Wheat			& 45,406		& 27,202		& 17,009	& 89,617 \\
-		Rapeesed		& 7,945			& 3,557			& 3,244		& 14,746 \\
+		Rapeseed		& 7,945			& 3,557			& 3,244		& 14,746 \\
 		Corn			& 80,623		& 42,011		& 31,361	& 153,995 \\
 		Sunflower		& 7				& 10			& 2			& 19 \\
 		Orchards		& 1,285			& 1,217			& 552		& 3,054 \\
@@ -625,16 +655,56 @@ It is worth noting that the dataset is imbalanced, i.e., each class has differen
 	\end{tabular}
 	\label{samples}
 \end{table}
-It is worth mentioning that this datasets provides only spectral signatures in tabular format for the center pixel in a field and not Sentinel 2 images. Nevertheless, to enable our qualitative analysis and produce output classification maps, we downloaded Sentinel 2 images using GEE. However, not all Sentinel 2 products in 2017 are available in GEE database and less images than in Breizhcrops dataset were used for this experiment.
-\subsection{AEs training.}
-With the aim of developing an algorithm capable of being scalable to relatively large geographic areas, the AE is composed by a single layer FCN as encoder, and its counterpart for the decoder.
+It is worth mentioning that this dataset provides only spectral signatures in tabular format for the center pixel in a field and not Sentinel 2 images. Nevertheless, to enable our qualitative analysis and produce output classification maps, we downloaded Sentinel 2 images using GEE. However, not all Sentinel 2 products in 2017 are available in GEE database and less images than in Breizhcrops dataset were used for this experiment.
+\subsection{\ac{AEs} training.}
+With the aim of developing an algorithm capable of process relatively large geographic areas, the AE is composed by a single layer \ac{FCN} as encoder, and its counterpart for the decoder.
 This keeps computational load and processing times lower than other models such as convolutional or recurrent networks.
 Batch size, learning rate, number of units in hidden layer and the loss function were set in accordance with the results acquired through the hyperparameter random search presented in Appendix \ref{app_a}.
-Table \ref{hyperparameters_aes} presents the AEs configuration.
+Dataset split is described in Table \ref{data_split}, which outlines the features employed in this experiment. These include \ac{DOY} (sine and cosine), 10 spectral bands (10 and 20 meters resampled to 10m) and five well-known spectral indices (\ac{NDWI}, \ac{NDVI}, \ac{NDTI}, \ac{NDSVI} and \ac{EVI}). Table \ref{hyperparameters_aes} presents the \ac{AEs} configuration.
 
-\begin{minipage}[t]{0.5\textwidth}
+% \begin{minipage}[t]{0.5\textwidth}
+% 	\begin{table}[H]
+% 		\caption{Training, validation and testing split, and number of input features and classes considered for the AEs models.}
+% 		\begin{tabular}{c|c} 
+% 			\hline
+% 			Parameter & Value \\ [1ex] 
+% 			\hline
+% 			Training size & 319,414 \\ [1ex]
+% 			Validation size & 166,367 \\[1ex]
+% 			Testing size & 122,708 \\ [1ex]
+% 			Features & \makecell{10 bands, \\ 2 DOY,\\ 5 spectral indices} \\ [1ex] 
+% 			Classes & 9 \\ [1ex] 
+% 			\hline
+% 		\end{tabular}
+% 	\label{data_split}
+% 	\end{table}
+% \end{minipage}
+% \begin{minipage}[t]{0.35\textwidth}
+% 	\begin{table}[H]
+% 		\caption{AEs hyperparameters final configuration established by random search.}
+% 		\begin{tabular}{c|c}
+% 		\hline
+% 			\multicolumn{2}{c}{Hyperparameters} \\ \hline
+% 			Epochs & 1000 \\
+% 			Early stop & True \\ 
+% 			Patience & 10 \\ 
+% 			Min. delta & 1e-5 \\ 
+% 			Batch size rate & 0.05* \\ 
+% 			Units in hidden layers & 5 \\ 
+% 			Learning rate & 1e-4 \\ 
+% 			Optimizer & Adam \\ 
+% 			Loss & MSE \\ \hline
+% 			\multicolumn{2}{c}{* proportion of samples for each class}
+% 		\end{tabular}
+% 		\label{hyperparameters_aes}
+% 	\end{table}
+% \end{minipage}
+
+\begin{minipage}[t]{0.45\textwidth}
 	\begin{table}[H]
-		\caption{Dataset split.}
+        \centering
+        \footnotesize
+		\caption{Training, validation and testing split, and number of input features and classes considered for the autoencoders.}
 		\begin{tabular}{c|c} 
 			\hline
 			Parameter & Value \\ [1ex] 
@@ -648,13 +718,15 @@ Table \ref{hyperparameters_aes} presents the AEs configuration.
 		\end{tabular}
 	\label{data_split}
 	\end{table}
-\end{minipage}
-\begin{minipage}[t]{0.35\textwidth}
+\end{minipage}\hspace{0.5cm}
+\begin{minipage}[t]{0.45\textwidth}
 	\begin{table}[H]
-		\caption{Setting up of the AEs hyperparameters.}
+        \centering
+        \footnotesize
+		\caption{Autoencoders (AEs) hyperparameters final configuration established by random search.}
 		\begin{tabular}{c|c}
 		\hline
-			\multicolumn{2}{c}{Hyperparameters} \\ \hline
+			Hyperparameter & Value \\ \hline
 			Epochs & 1000 \\
 			Early stop & True \\ 
 			Patience & 10 \\ 
@@ -663,74 +735,80 @@ Table \ref{hyperparameters_aes} presents the AEs configuration.
 			Units in hidden layers & 5 \\ 
 			Learning rate & 1e-4 \\ 
 			Optimizer & Adam \\ 
-			Loss & MAE \\ \hline
+			Loss & MSE \\ \hline
 			\multicolumn{2}{c}{* proportion of samples for each class}
 		\end{tabular}
 		\label{hyperparameters_aes}
 	\end{table}
-\end{minipage}
+\end{minipage}\vspace{0.5cm}
 
 % \subsection{Loss functions}
 % Considering the regression loss functions Mean Absolute Error (MAE) and Mean Square Error (MSE) as the search elements in our random search, MAE is defined by
 % as the loss function for this experiments, since it performed slightly better than mse in most of the runs.
-Figure \ref{loss_fuctions} shows, for each AE, the training and validation loss function computed as the mean absolute error (MAE)
-\begin{equation}
-	MAE = \frac{1}{M}\sum_{m=0}^{M}|x_m - \hat{x}_m|
-\end{equation}
+% Figure \ref{loss_fuctions} shows, for each AE, the training and validation loss function computed as the mean absolute error (MAE)
+% \begin{equation}
+% 	MAE = \frac{1}{M}\sum_{m=0}^{M}|x_m - \hat{x}_m|
+% \end{equation}
+
+% Figure \ref{loss_fuctions} shows, for each AE, the training and validation loss function computed as the Mean Squared Error (MSE)
+% \begin{equation}
+% 	\ac{MSE}=\frac{1}{N} \sum_{n=1}^{N} (\mathbf{y}_{n} - \hat{\mathbf{y}}_{n})^{2}
+% \end{equation}
+
 % We can see a soft MAE decrease, both for the training (blue) and validation (orange) data. In some AEs (\ref{fig:loss_nuts}, \ref{fig:loss_sunflower}, \ref{fig:loss_orchards}), the loss function still decays at the last epoch, but was stopped according to our hyperparameters setting \ref{hyperparameters_aes}.
-\begin{figure}[H]
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\linewidth]{figures/results_040923/loss_barley.pdf}
-	\caption{}
-	\label{fig:loss_barley}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.3\textwidth}
-	  \includegraphics[width=\linewidth]{figures/results_040923/loss_corn.pdf}
-	\caption{}
-	\label{fig:loss_corn}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\linewidth]{figures/results_040923/loss_nuts.pdf}
-	\caption{}
-	\label{fig:loss_nuts}
-	\end{subfigure}\\[0.2cm]
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\linewidth]{figures/results_040923/loss_rapeseed.pdf}
-	\caption{}
-	\label{fig:loss_rapeseed}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\linewidth]{figures/results_040923/loss_permanent_meadows.pdf}
-	\caption{}
-	\label{fig:loss_pm}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\textwidth]{figures/results_040923/loss_temporary_meadows.pdf}
-	\caption{}
-	\label{fig:loss_tm}
-	\end{subfigure}\\[0.2cm]
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\linewidth]{figures/results_040923/loss_sunflower.pdf}
-	\caption{}
-	\label{fig:loss_sunflower}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\linewidth]{figures/results_040923/loss_orchards.pdf}
-	\caption{}
-	\label{fig:loss_orchards}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=\linewidth]{figures/results_040923/loss_wheat.pdf}
-	\caption{}
-	\label{fig:loss_wheat}
-	\end{subfigure}
-	\caption{Loss functions of AEs trained with (a) barley, (b) corn, (c) nuts, (d) rapeseed, (e) permanent meadows, (f) temporary meadows, (g) sunflower (h) orchards and (i) wheat samples.}
-	\label{loss_fuctions}
-\end{figure}
+% \begin{figure}[H]
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_barley.pdf}
+% 	\caption{}
+% 	\label{fig:loss_barley}
+% 	\end{subfigure}\hfill
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 	  \includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_corn.pdf}
+% 	\caption{}
+% 	\label{fig:loss_corn}
+% 	\end{subfigure}\hfill
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_nuts.pdf}
+% 	\caption{}
+% 	\label{fig:loss_nuts}
+% 	\end{subfigure}\\[0.2cm]
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_rapeseed.pdf}
+% 	\caption{}
+% 	\label{fig:loss_rapeseed}
+% 	\end{subfigure}\hfill
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_permanent_meadows.pdf}
+% 	\caption{}
+% 	\label{fig:loss_pm}
+% 	\end{subfigure}\hfill
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\textwidth]{figures/aes_1_layer_mse_results/loss_functions/loss_temporary_meadows.pdf}
+% 	\caption{}
+% 	\label{fig:loss_tm}
+% 	\end{subfigure}\\[0.2cm]
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_sunflower.pdf}
+% 	\caption{}
+% 	\label{fig:loss_sunflower}
+% 	\end{subfigure}\hfill
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_orchards.pdf}
+% 	\caption{}
+% 	\label{fig:loss_orchards}
+% 	\end{subfigure}\hfill
+% 	\begin{subfigure}[t]{0.3\textwidth}
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/loss_functions/loss_wheat.pdf}
+% 	\caption{}
+% 	\label{fig:loss_wheat}
+% 	\end{subfigure}
+% 	\caption{Loss functions of AEs trained with (a) barley, (b) corn, (c) nuts, (d) rapeseed, (e) permanent meadows, (f) temporary meadows, (g) sunflower (h) orchards and (i) wheat samples.}
+% 	\label{loss_fuctions}
+% \end{figure}
 
 \subsection{Separabilty assessment and distance metrics}
 For qualitative assessment of the inter-class separability in the generated representations space, 
-3D scatterplots of the test spectral-temporal RS data and their corresponding representations produced by our method, reduced to a three-dimensional space by principal component analysis (PCA), are shown in Figures \ref{fig:pca_raw} and \ref{fig:pca_rep} respectively.
+3D scatterplots of the test spectral-temporal Sentinel-2 \ac{BOA} data and their corresponding representations produced by our method, reduced to a three-dimensional space by principal component analysis (PCA), are shown in Figures \ref{fig:pca_raw} and \ref{fig:pca_rep} respectively.
 The scatter plot of representations, compared with that of the initial data, shows that the density of points belonging to each of the crop types is much better clustered.
 \begin{figure}[H]
 	\centering
@@ -746,7 +824,7 @@ The scatter plot of representations, compared with that of the initial data, sho
 	\caption{}
 	\label{fig:pca_rep}
 	\end{subfigure}
-	\caption{3D-scatterplot of (a) S2 BOA fixed-length time series (45 observations) and (b) representation, over three principal components obtained by PCA.}
+	\caption{3D-scatterplot of (a) S2 fixed-length time series (45 observations) and (b) representation, over three principal components obtained by principal component analysis (PCA) only for visual interpretation.}
 	\label{fcn_losses}
 \end{figure}
 % \begin{figure}[H]
@@ -754,26 +832,47 @@ The scatter plot of representations, compared with that of the initial data, sho
 % 	\includegraphics[width=0.4\linewidth]{figures/PCA_3D.png}
 % 	\caption{Representation over three principal components obtained by PCA applied to the reconstruction difference of the AEs.}
 % 	\label{fig:pca}
-% \end{figure}
-Distance metrics were used to assess the distance between classes. 
-Table \ref{distance_metrics_results} presents a comparison of the inter-class separability on the input spectral-temporal data and the generated representations, measured by Silhouette score (SS), Calinski-Harabasz index (CH) and Davies-Bouldin Index (DBI) (see Appendix \ref{app_distance_m} for a description).
+% Several distance metrics were used to assess the distance between classes. Table \ref{distance_metrics_results} presents a comparison of the inter-class separability on the input spectral-temporal data and the generated representations, measured by Silhouette score ($SS$) ranges from -1 for incorrect clustering and +1 for highly dense clustering, Calinski-harabasz index ($CH$) larger scores indicates better separability, Davies-bouldin index ($DBI$) ranges from 0 to $\infty$ and the closer to zero the better partition. In addition, we used K-means algorithm to find the clusters centroids and compute the commonly used euclidean distance ($ED$), mahalanobis distance ($MD$) and manhattan distance ($M$) larger scores indicates better separability.
+% % silhouette score (SS), calinski-harabasz index (CH), davies-douldin index (DBI). In addition, we used K-means algorithm to find the clusters centroids and compute the commonly used euclidean distance (ED), mahalanobis distance (MD) and manhattan distance (M) (see Appendix \ref{app_distance_m} for metrics definitions).
+% In the same way as in the qualitative analysis, distance scores demonstrate much higher separability on the representation space than on the initial data.
+% \begin{table}[H]
+% 	\centering
+% 	\caption{Class distance assessment of the S2 dataset and the representations produced by our method. Silhouette score ($SS$), Calinski-harabasz index ($CH$), Davies-bouldin index ($DBI$). For clusters centroids distance assessment, euclidean distance ($ED$), mahalanobis distance ($MD$) and manhattan distance ($M$).}
+% 	\begin{tabular}{c|c|c}
+% 		\hline
+% 		Distance metric & S2 & Our approach \\
+% 		\hline  	
+% 		$SS$ & -0.76 & \textbf{0.20} \\
+%         $CH$ & 1.4 & \textbf{73074.46} \\
+% 		$DBI$ & 72.44  & \textbf{18.96} \\ 
+%         \hline
+%         $ED$ & 0.3205 & \textbf{0.6665}\\
+%         $MD$ & 2.2907 & \textbf{2.3545}\\
+%         $M$ & 0.4688& \textbf{0.9725}\\
+% 		\hline
+% 	\end{tabular}
+% 	\label{distance_metrics_results}
+% \end{table}
+
+Several distance metrics were used to assess the distance between classes. Table \ref{distance_metrics_results} presents a comparison of the inter-class separability on the input spectral-temporal Sentinel-2 BOA data and the generated representations, measured by: Silhouette score ($SS$), which ranges from -1 for incorrect clustering and +1 for highly dense clustering, Calinski-harabasz index ($CH$), for which larger scores indicates better separability, and Davies-Bouldin index ($DBI$), which ranges from 0 to $\infty$ and the closer to zero the better the separability between clusters (see Appendix \ref{app_distance_m} for metrics definitions).
+% silhouette score (SS), calinski-harabasz index (CH), davies-douldin index (DBI). In addition, we used K-means algorithm to find the clusters centroids and compute the commonly used euclidean distance (ED), mahalanobis distance (MD) and manhattan distance (M) (see Appendix \ref{app_distance_m} for metrics definitions).
 In the same way as in the qualitative analysis, distance scores demonstrate much higher separability on the representation space than on the initial data.
 \begin{table}[H]
 	\centering
-	\caption{Class distance assessment of the input S2 optical dataset and the representations produced by the proposed method. $SS$ ranges from -1 for incorrect clustering and +1 for highly dense clustering. $CH$ larger scores indicates better separability. $DBI$ ranges from 0 to $\infty$ and the closer to zero the better partition.}
+	\caption{Class distance assessment of the S2 dataset and the representations produced by our method. Silhouette score ($SS$), Calinski-harabasz index ($CH$), Davies-bouldin index ($DBI$).}
 	\begin{tabular}{c|c|c}
 		\hline
-		Distance metric & BOA & Our approach \\
+		Distance metric & S2 data & Our approach \\
 		\hline  	
-		$SS$ & -0.76 & \textbf{0.18} \\
-		$CH$ & 1.4 & \textbf{48678.5} \\
-		$DBI$ & 72.44  & \textbf{9.73} \\
+		$SS$ & -0.76 & \textbf{0.20} \\
+        $CH$ & 1.4 & \textbf{73074.46} \\
+		$DBI$ & 72.44  & \textbf{18.96} \\ 
 		\hline
 	\end{tabular}
 	\label{distance_metrics_results}
 \end{table}
 
-\subsection{Evaluating representations in the classification of crop types}
+\subsection{Evaluating representations in the classification of crop types}\label{results_section}
 % Class separability and classification metrics are used in this work to assess the quality of the derived representations.
 %Different quality indicators can be considered for representations assessment. For the particular case of representations for classification, class separability and classification metrics are used in this work.
 % For evaluating the representations, there are different methods like clustering, distance metrics \cite{Shutaywi2021}, rankme \cite{Garrido2023, Balestriero2023}, . We 
@@ -786,21 +885,23 @@ In the same way as in the qualitative analysis, distance scores demonstrate much
 % In this part, it is important to note that the dataset is imbalanced, 
 % i.e., all the classes have a different number of samples, which makes the classification model more sensitive to overfitting. 
 % The description of the classifier is described in the Table \ref{fcn_hyperparameters}.
-After the representations have been learned, a 3-layer FCN was used as classification model, where the inputs are the generated representations and their corresponding labels. The parameters of the classifier are detailed in Table \ref{fcn_hyperparameters}.
-The representation values derived by DOY embeddings are removed from our representation vectors, since averaging these values induces redundancy to the classification model. Hence, the input dimensionality is defined by $B$ spectral bands plus 5 spectral indices.
+Once the representations have been produced, a 3-layer FCN was used as classification model, where the inputs are the generated representations and their corresponding labels. The parameters of the classifier are detailed in Table \ref{fcn_hyperparameters}.
+The representation values derived by DOY embeddings are removed from our representation vectors, since averaging these values induces redundancy to the classification model. Hence, the input dimensionality is defined by $B$ spectral bands plus 5 spectral indices times $C$, the number of AEs.
 \begin{table}[H]
 	\centering
-	\caption{Classification model hyperparameters. $B$ denotes the number of bands, and $C$ the number of AEs. Note that only 5 additional features (the spectral vegetation indices) are added to the spectral bands, since DOY features are excluded from the representations in the training of the classification model.}
+	\caption{Classification model configuration.}
+ 	% \caption{Classification model hyperparameters. $B$ denotes the number of bands, and $C$ the number of autoencoders (AEs). Note that only 5 additional features (the spectral vegetation indices) are added to the spectral bands, since day-of-Year (DOY) features are excluded from the representations in the training of the classification model.}
 	\begin{tabular}{c|c}
 	\hline
-		\multicolumn{2}{c}{Hyperparameters} \\ \hline
+		Hyperparameter & Value \\ \hline
 		Input size & $(B + 5) \times C = 135$ \\
-		Epochs & 100 \\ 
+		Epochs & 10000 \\ 
 		% Patience & 100 \\ 
 		% Min. delta & 1e-5 \\ 
-		Batch size & 100\\ 
+		Batch size & 1000\\ 
+        %Scaler & MinMax \\
 		Units in hidden layers & 128, 64, 32 \\  
-		Learning rate & 1e-5 \\
+		Learning rate & 1e-4 \\
 		Optimizer & Adam \\ 
 		Loss & Categorical crossentropy \\ \hline
 	\end{tabular}
@@ -822,70 +923,125 @@ The representation values derived by DOY embeddings are removed from our represe
 % In this section, quantitative results of the proposed framework are presented and compared with results reported in \cite{Russwurm2020} for different state of the art methods. 
 % For qualitative interpretation, classification maps are shown using the obtained representations.
 
-% \subsubsection{Quantitative results}
-In addition to monitoring training and validation loss functions, the overall accuracy (OA) is monitored as indicator of classification model performance. Due to the clear imbalance among classes, BreizhCrops is an extremely challenging dataset. Therefore, the Matthews correlation coefficient (MCC), which is robust to class imbalance, is also monitored for a less biased evaluation. Figure \ref{fcn_losses} presents the progress of these metrics during model fitting.
-In Figure \ref{fig:fcn_loss} MAE on validation dataset follows the same descending trend as in the training dataset, indicating that no overfitting occurs during training. From Figures \ref{fig:fcn_accuracy} and \ref{fig:fcn_mcc}, it can be seen that OA and MCC are slightly better on the training dataset.
-% The loss function is still decreasing for training but not for validation in Figure \ref{fig:fcn_loss}. 
-% The overall accuracy of the Figure \ref{fig:fcn_accuracy} is still increasing to an acceptable level.
-% The imbalance in the dataset led to the consideration of the MCC metric (see Figure \ref{fig:fcn_mcc}).
+% % \subsubsection{Quantitative results}
+% In addition to monitoring training and validation loss functions, the overall accuracy (OA) is monitored as indicator of classification model performance. Due to the clear imbalance among classes, BreizhCrops is an extremely challenging dataset. Therefore, the Matthews correlation coefficient (MCC), which is robust to class imbalance, is also monitored for a less biased evaluation. Figure \ref{fcn_losses} presents the progress of these metrics during model fitting.
+% In Figure \ref{fig:fcn_loss} MSE on validation dataset follows the same descending trend as in the training dataset, indicating that no overfitting occurs during training. From Figures \ref{fig:fcn_accuracy} and \ref{fig:fcn_mcc}, it can be seen that OA and MCC are slightly better on the training dataset.
+% % The loss function is still decreasing for training but not for validation in Figure \ref{fig:fcn_loss}. 
+% % The overall accuracy of the Figure \ref{fig:fcn_accuracy} is still increasing to an acceptable level.
+% % The imbalance in the dataset led to the consideration of the MCC metric (see Figure \ref{fig:fcn_mcc}).
+% \begin{figure}[H]
+% 	\centering
+% 	\begin{subfigure}[t]{0.3\linewidth}
+% 		\centering
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/fcn_loss.pdf}
+% 	  \caption{}
+% 	  \label{fig:fcn_loss}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.3\linewidth}
+% 		\centering
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/fcn_accuracy.pdf}
+% 	\caption{}
+% 	\label{fig:fcn_accuracy}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.3\linewidth}
+% 		\centering
+% 		\includegraphics[width=\linewidth]{figures/aes_1_layer_mse_results/fcn_mcc.pdf}
+%     \caption{}
+% 	\label{fig:fcn_mcc}
+% 	\end{subfigure}
+% 	\caption{FCN training and validation (a) MSE (b) OA and (c) MCC functions over epochs.}
+% 	\label{fcn_losses}
+% \end{figure}
+
+% Table \ref{Classification_performance_evaluation_conventional_classifiers} shows the performance evaluation of different traditional classifiers, such as RF, SVM, XGBoost, and FCN, are evaluated by OA, Cohen’s kappa coefficient ($\kappa$) and  MCC, using two types of input data: L2A and Representations. Using Representations gives the RF classifier an OA of 0.73, which is greater than the 0.71 obtained using L2A data. Similarly, the SVM classifier gets an OA of 0.74 using Representations, which exceeds the 0.70 attained with L2A data. XGBoost likewise performs better with Representations 0.71 than with L2A data 0.70 in OA.
+% The FCN classifier achieves the best results with both input types but stands out particularly with using the Representations as an input, reaching the highest OA of 0.76. This demonstrates the overall superiority of Representations as input data for improving classification performance across conventional models.\\
+% Using the Representations, the $\kappa$ scores are consistently higher across all classifiers than with the L2A data, reflecting improved classification. RF reaches 0.64, SVM achieves 0.66, and XGBoost improves to 0.62. The FCN classifier obtains the highest $\kappa$ value 0.69, showing the best agreement between predicted and true labels. FCN has the greatest MCC (0.69) when using Representations, followed by SVM (0.67) and RF (0.64). The greater MCC for FCN (and other classifiers) when Representations are used illustrates their efficacy in enhancing classification performance.
+
+A comparative study is presented in Table \ref{Classification_performance_evaluation_conventional_classifiers} where the performance of different traditional classifiers, such as RF, SVM, XGBoost, and FCN, is evaluated by overall accuracy (OA), Cohen’s kappa coefficient ($\kappa$) and Matthews correlation coefficient (MCC), using two types of input data: fixed length Sentinel-2 BOA data and our derived representations. All models tested with the same training and testing samples of BreizhCrops dataset ensuring that test data points remained consistent across experiments, allowing direct comparison of results. 
+
+In all cases our representations improved classification performances of the benchmarked classifiers, obtaining from $1\%$ to $4\%$ better scores than with original Sentinel-2 data. The FCN classifier achieves the best OA, $\kappa$ and MCC with both input types, and stands out particularly using the representations as input, reaching the highest OA=0.7672, $\kappa$=0.6953 and MCC=0.6977.
+
+% Using the Representations, the $\kappa$ scores are consistently higher across all classifiers than with the L2A data, reflecting improved classification. RF reaches 0.64, SVM achieves 0.66, and XGBoost improves to 0.62. The FCN classifier obtains the highest $\kappa$ value 0.69, showing the best agreement between predicted and true labels. FCN has the greatest MCC (0.69) when using Representations, followed by SVM (0.67) and RF (0.64). 
+% This demonstrates the overall superiority of Representations as input data for improving classification performance across conventional models
+
+\begin{table}[H]
+    \centering
+    \caption{Comparison of classification performance with Sentinel-2 data versus representations produced by our method as input data to conventional classifiers, random forest (RF), support vector machine (SVM), extreme gradient boosting (XGBoost) and fully connected network (FCN) evaluated by overall accuracy (OA), Cohen’s kappa coefficient ($\kappa$), and Matthews correlation coefficient (MCC).}
+    \begin{tabular}{c|c c c c| c c c c}
+    \hline 
+        & \multicolumn{4}{c|}{S2 data} & \multicolumn{4}{c}{Representations}\\ \hline
+        Metric &    RF  &   SVM  &   XGBoost &   FCN    &    RF   &   SVM     &   XGBoost &   FCN \\ \hline
+         OA   & 0.7172 & 0.7091 &   0.7036  &  0.7438  &  0.7345 &   0.7466  &   0.7139  & \textbf{0.7672}\\ 
+         $\kappa$    & 0.6264 & 0.6197 &   0.6113  &  0.6716  &  0.6464 &   0.6688  &   0.6201  & \textbf{0.6953}\\ 
+         MCC   & 0.6326 & 0.6249 &   0.6149  &  0.6729  &  0.6491 &   0.6710  &   0.6234  & \textbf{0.6977} \\ \hline
+    \end{tabular}
+    \label{Classification_performance_evaluation_conventional_classifiers}
+\end{table}
+
+We conducted a comparison between representations and S2 data across all classifiers in scenarios with limited labeled data. Results presented in Figure \ref{oa_vs_train_pct} demonstrate that the representations consistently offers greater stability and maintains higher accuracy as the percentage of available training data decreases.
+
+The FCN benefits exceptionally from representations, it obtains the highest \ac{OA} of $\sim 0.77$ using $100 \%$ of the training data, and its classification performance is much less affected than with original Sentinel-2 data as the number of training samples decreases. 
+% representations allowing FCN to maintain a steadier performance, showing its advantage in low-data scenarios. 
+% On the other hand, when the input is S2-BOA data, it starts with accuracy among classifiers, around $\sim 0.74$ at $100 \%$ training data. 
+% However, as the training data decreases, FCN's performance significantly drops. For RF, representations are highly effective due to, maintaining an acceptable accuracy even as data availability decreases. 
+Moreover, SVM in combination with the representations keep classification performance stable, even with very low number of training samples (around 30,000), offering clear improvements over S2 data and making it the best option in this scenario. Addiionllay, XGBoost and RF offers already stable performance with S2, but the use of representations considerably elevates accuracy.
+
+% The Figure \ref{oa_vs_train_pct} shows the representations outperform S2-BOA for all classifiers, particularly as the amount of training data decreases. Due to, they are enriched representations improve model robustness and accuracy, especially in data-scarce environments, making the representations the best overall representation across all models.
+
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[t]{0.3\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{figures/classification_results/fcn_loss.pdf}
-	  \caption{}
-	  \label{fig:fcn_loss}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.3\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{figures/classification_results/fcn_accuracy.pdf}
-	\caption{}
-	\label{fig:fcn_accuracy}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.3\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{figures/classification_results/fcn_mcc.pdf}
-    \caption{}
-	\label{fig:fcn_mcc}
-	\end{subfigure}
-	\caption{FCN training and validation (a) MAE (b) OA and (c) MCC functions over epochs.}
-	\label{fcn_losses}
+	\includegraphics[width=\textwidth]{figures/oa_vs_train_pct_corrected-2.pdf}
+	\caption{Overall Accuracy (OA) of conventional classifiers, random forest (RF), support vector machine (SVM), extreme gradient boosting (XGBoost) and fully connected network (FCN) trained with variable percentage of training samples.}
+	\label{oa_vs_train_pct}    
 \end{figure}
 
-The confusion matrix shown in Figure \ref{confusion_matrix} presents the model performance on the testing dataset.
-While the model performs relatively accurate for wheat, rapeseed and corn samples, permanent and temporary meadows are not separable. This type of missclassification is due to the similarity in nature of both crop types.
-Additionally, the small and challenging classes in this dataset, i.e., sunflower, orchards and nuts, are also totally misclassified mainly due to the very limited number of samples.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.57\textwidth]{figures/confusion_matrix_fcn_run_9.pdf}
-	\caption{Confusion matrix of the FCN prediction for the testing data.}
-	\label{confusion_matrix}
-\end{figure}
+The confusion matrix shown in Table \ref{confusion_matrix} presents the model performance on the testing dataset.
+Our approach performs relatively accurate for wheat, rapeseed and corn samples, and, although permanent and temporary meadows samples are not accurately classified, both classes are actually the same crop type, and misclassified samples are mainly due to their similar nature as it is shown in the last two rows of the confusion matrix. However, our approach is inaccurate for the small and challenging classes in this dataset, i.e., sunflower, orchards and nuts, although misclassification of these classes is not related to incapacity of the model to deal with imbalanced datasets, but it is principally due to the very limited number of samples.
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Confusion matrix of the fully connected network (FCN) prediction for the testing data.}
+\begin{tabular}{c|ccccccccc}
+\hline
+\makecell{Object\\based} & Barley & Wheat & Rapeseed & Corn & Sunflower & Orchards & Nuts & \makecell{Permanent\\meadows} & \makecell{Temporary\\meadows} \\ \hline
+Barley      & 4653  & 760   & 40   & 163   & 0 & 0 & 0 & 31    & 334   \\
+Wheat       & 535  & 15850 & 14   & 179   & 0 & 0 & 0 & 79   & 352   \\
+Rapeseed    & 208   & 25    & 2864  & 42    & 0 & 0 & 0 & 13    & 92   \\
+Corn        & 267   & 422   & 22  & 29547 & 0 & 0 & 0 & 104   & 999  \\
+Sunflower   & 0     & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\
+Orchards    & 3     & 6 & 0 & 5 & 0 & 0 & 0 & 290   & 248   \\
+Nuts        & 0     & 0 & 0 & 2 & 0 & 0 & 0 & 5 & 4 \\
+\makecell{Permanent\\meadows}   & 287   & 246   & 14    & 164   & 0 & 0 & 0 & 11985 & 13438 \\
+\makecell{Temporary\\meadows}   & 562   & 439   & 53    & 568   & 0 & 0 & 0 & 7541  & 29251 \\ 
+\hline                  
+\end{tabular}
+\label{confusion_matrix}
+\end{table}
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=.57\textwidth]{figures/aes_1_layer_mse_results/confusion_matrix_test.pdf}
+% 	\caption{Confusion matrix of the FCN prediction for the testing data.}
+% 	\label{confusion_matrix}
+% \end{figure}
 %In the Table \ref{Quantitative_results} we can see the summary results,
 Table \ref{Quantitative_results} presents a performance comparison of our method with convolutional, recurrence and attention methods. 
-TempCNN, OmniscCNN, LSTM, StarRNN, Transformer, and our proposed method with the generated representations as input to a FCN are evaluated by overall accuracy (OA), average accuracy (AA), F1 score, and Cohen's kappa coefficient ($\kappa$). 
-Additionally, details on the processor used, the number of parameters, and runtime are presented. 
+TempCNN, OmniscCNN, LSTM, StarRNN, Transformer, and our proposed method with the generated representations as input to a FCN are evaluated by OA, average accuracy (AA), F1 score, and $\kappa$. 
+Additionally, details on the processor used, the number of parameters, and runtime ($it/s$) are presented. 
 We present the results reported in \cite{Russwurm2020}, since the code used for those experiments is not publicly available and it is not straightforwardly reproducible. 
 Notwithstanding, the same test data points were used in our experiments, hence, results are directly comparable.
 
-The OA achieved with our method is 0.74, while a Transformer model reaches 0.80. However, Transfomer is composed by 188,429 trainable parameters, while ours only needs 6,825, i.e., ~28 times less trainable parametes, which is directly related to the computational load and processing time. 
-Moreover, other complex convolutional models, such as TempCNN and OmniscCNN, achieve 0.79 and 0.73 OA, i.e., only 0.05 higher and 0.01 lower than our method respectively, but more 400 times more parameters.
-Likewise, Transformer's AA has the highest score 0.58, while our method reached 0.53, slightly below transformers but still within a competitive range.
-
-The F1 score, which balances precision and recall, and therefore provides a balanced assessment of the model, was also the highest in the LSTM and Transformer models with 0.80, while our representations-based FCN achieved 0.74, reflecting its ability to maintain a reasonable balance despite the imbalanced class distribution.
-Similarly, LSTM and Transformer models reach the highest Kappa's coefficient (0.75), while our method's is strongly penalized due mostly to the proportion of mismatches on barley, and permanent and temporary meadows. Although our method reaches 0.10 lower score than the competing models, it is still relatively good, especially considering the shallowness of the model.
 \begin{table}[H]
 	\centering
-	\caption{Classification performance evaluation of benchmarked models. All models were evaluated over the same testing dataset.}
+	\caption{Classification performance evaluation of benchmarked models by overall accuracy (OA), average precision (AP), F1 score (F1) and Cohen’s kappa coefficient ($\kappa$). All models were evaluated over the same testing dataset.}
 	\footnotesize
 	\begin{tabular}{c| c c c c c c}
 	\hline
 	 & TempCNN & OmniscCNN & LSTM            & StartRNN & Transformer     & \textbf{Representations-FCN}\\[1.1ex]
 	\hline   
-	OA & 0.79    & 0.73      & \textbf{0.80}   & 0.79     & \textbf{0.80}   & \textbf{0.74} \\
-	AA & 0.55    & 0.52      & 0.57            & 0.56     & 0.58            &  0.53\\
-	F1 & 0.79    & 0.72      & 0.80            & 0.79     & 0.80            &  0.74\\
-	k                        & 0.73    & 0.65      & 0.74            & 0.73     & 0.75            &  0.66\\ [1.2ex]
+	OA & 0.79    & 0.73      & \textbf{0.80}   & 0.79     & \textbf{0.80}   & \textbf{0.77} \\
+	AP & 0.55    & 0.52      & 0.57            & 0.56     & 0.58            &  0.54\\
+	F1 & 0.79    & 0.72      & 0.80            & 0.79     & 0.80            &  0.76\\
+	$\kappa$  & 0.73    & 0.65      & 0.74            & 0.73     & 0.75            &  0.70\\ [1.2ex]
 	\hline
 	Processor &\multicolumn{5}{c}{\makecell{8X NVIDI Tesla P100 \\ 16GB/GPU 28,672 Total\\ NVIDIA CUDA Cores}} & \makecell{Intel® Core™ \\i5-1035G1 \\CPU @ 1.00GHz\\ $\times$8 Mesa Intel® \\UHD Graphics\\(ICL GT1)}\\ [1.1ex] \hline
 	N° param & 3,199,501 & 2,739,737 & 1,339,431     & 72,103   & 188,429         & \textbf{6,825} \\
@@ -895,6 +1051,19 @@ Similarly, LSTM and Transformer models reach the highest Kappa's coefficient (0.
 \label{Quantitative_results}
 \end{table}
 
+% The OA achieved with our method is 0.74, while a Transformer model reaches 0.80. However, Transfomer is composed by 188,429 trainable parameters, while ours only needs 6,825, i.e., ~28 times less trainable parametes, which is directly related to the computational load and processing time. 
+% Moreover, other complex convolutional models, such as TempCNN and OmniscCNN, achieve 0.79 and 0.73 OA, i.e., only 0.05 higher and 0.01 lower than our method respectively, but more 400 times more parameters.
+% Likewise, Transformer's AA has the highest score 0.58, while our method reached 0.53, slightly below transformers but still within a competitive range.
+
+% The F1 score, which balances precision and recall, and therefore provides a balanced assessment of the model, was also the highest in the LSTM and Transformer models with 0.80, while our representations-based FCN achieved 0.74, reflecting its ability to maintain a reasonable balance despite the imbalanced class distribution.
+% Similarly, LSTM and Transformer models reach the highest Kappa's coefficient (0.75), while our method's is strongly penalized due mostly to the proportion of mismatches on barley, and permanent and temporary meadows. Although our method reaches 0.10 lower score than the competing models, it is still relatively good, especially considering the shallowness of the model.
+
+Our representations-based approach combined with the FCN is substantially less computationally \hl{expensive} than the other benchmarked methods, requiring only 6,825 trainable parameters, compared to the 1,338,431 for LSTM and 188,429 for Transformer, roughly 200 and 28 times fewer parameters respectively. This reduction directly impacts computational load and consequently processing time, as seen in the runtime of 0.75 it/s for FCN, which, despite running on much lower capacity hardware, is just slightly slower than Transformer (1.20 it/s) and other sophisticated models such as TempCNN (1.25 it/s) and OmniscCNN (1.02 it/s).
+
+In addition to this \hl{substantial reduction of trainable parameters}, our method mantains competitive classification accuracy, achieving an OA of 0.7672, just $3\%$ lower than Transformer's OA of 0.80. Furthermore, TempCNN (OA=0.79) and OmniscCNN (OA=0.73) showcase comparable accuracy of our method. However, they are much more computationally expensive, requiring approximately 400 times more parameters. than Representations-FCN.
+
+In terms of metrics that weight class imbalance, Transformer has the highest AA of 0.58, while Representations-FCN obtains a competitive 0.54. LSTM and Transformer obtained the highest F1 score (both 0.80), whereas Representations-FCN achieves a competitive 0.76, indicating a balanced performance despite having fewer parameters. Similarly, LSTM and Transformer have the highest $\kappa$ (0.75), with Representations-FCN scoring 0.70, which is penalized owing to mismatches in particular classes but remains effective given the model's simplicity.
+
 \subsection{Qualitative results}
 
 %\textcolor{yellow}{\textbf{This part belong to the section methodology (CHECK!)}}
@@ -902,7 +1071,7 @@ Similarly, LSTM and Transformer models reach the highest Kappa's coefficient (0.
 %Google Earth Engine (GEE) was used for download a multitemporal multispectral image of Sentinel 2 sensor in the FRH04 region of the 2017 year (see Figure \ref{fig:gee_img}) in order to obtain classification maps. \\
 As BreizhCrops data are sparse geographic points and not images, a qualitative assessment based on classification maps cannot be directly performed on this dataset. 
 Nevertheless, to enable a qualitative analysis, 67 Sentinel 2 multispectral images from 2017 of a subregion in FRH04 (test region) were downloaded and preprocessed. 
-A representative area was defined drawing a polygon where most of the classes (barley, wheat, corn, rapeseed, temporary meadows and permanent meadows) are present (Figure \ref{fig:gee_img}). 
+A representative area was defined drawing a polygon where most of the classes (barley, wheat, corn, rapeseed, temporary meadows and permanent meadows) are present (Figure \ref{fig:gee_img_a}). 
 % As for the BreizCrops dataset, only 10m and 20m resolution bands (resampled to 10m) were used. 
 % Besides, temporal embeddings described in subsection \ref{data_preprocessing}, as well as spectral indices mentioned in subsection \ref{dataset} are added as features.
 % \begin{figure}[H]
@@ -913,91 +1082,115 @@ A representative area was defined drawing a polygon where most of the classes (b
 % \end{figure}
 
 %The first step was to draw a polygon in this region where there are the majority of the classes, after this we download all images considering only 10 bands (10 and 20 meters of resolution). The second step was to do a preprocessing where was necessary to add the spectral indices and the day of the year in each image. After this we obtained the representations of this multitemporal multispectral image using the AEs trained previously. In the Figure \ref{representations} we can see the feature second of the representations of each AE.
-Representations for this study area are produced by passing individual pixels from the imagery dataset through the inference workflow outlined in Figure \ref{Inference}. 
-The false color images generated by combining three random representations bands presented in Figures \ref{fig:color_map_a}, \ref{fig:color_map_b} and \ref{fig:color_map_c}, as well as individual representations shown in Figure \ref{representations}, contrast the crop fields in the new representations space.
+Representations for this study area are produced by passing individual pixels from the imagery dataset through the inference workflow outlined in Figure \ref{Inference}. The composites images generated by combining three random representations bands presented in Figures \ref{fig:color_map_b}, \ref{fig:color_map_c}, \ref{fig:color_map_d}, \ref{fig:color_map_e}, \ref{fig:color_map_f}, \ref{fig:color_map_g} and \ref{fig:color_map_h}, contrast the crop fields in the new representations space.
+% The false color images generated by combining three random representations bands presented in Figures \ref{fig:color_map_a}, \ref{fig:color_map_b} and \ref{fig:color_map_c}, as well as individual representations shown in Figure \ref{representations}, contrast the crop fields in the new representations space.
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[t]{0.23\linewidth}
 		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/test_aoi_RGB.pdf}
+	\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/test_aoi_RGB.pdf}
 	\caption{}
-	\label{fig:gee_img}
+	\label{fig:gee_img_a}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\linewidth}
 		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/combinations/combinations_[59, 84, 81].pdf}
-	\caption{}
-	\label{fig:color_map_a}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-	  \includegraphics[height=\linewidth,width=0.95\linewidth]{figures/combinations/combinations_[30, 11, 141].pdf}
+    \includegraphics[height=\linewidth,width=0.95\linewidth]{figures/aes_1_layer_mse_results/composites/composite_image_1.pdf}
 	\caption{}
 	\label{fig:color_map_b}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\linewidth}
 		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/combinations/combinations_[45, 66, 57].pdf}
-    \caption{}
+	  \includegraphics[height=\linewidth,width=0.95\linewidth]{figures/aes_1_layer_mse_results/composites/composite_image_598481.pdf}
+	\caption{}
 	\label{fig:color_map_c}
 	\end{subfigure}
-	\caption{(a) True color image of the study area in 2017 and false color images combining three random representations per map (b) 59-84-81, (c) 30-11-141, and (d) 45-66-57.}
+	\begin{subfigure}[t]{0.23\linewidth}
+		\centering
+	\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/aes_1_layer_mse_results/composites/composite_image_3011141.pdf}
+    \caption{}
+	\label{fig:color_map_d}
+	\end{subfigure}\\[0.2cm]
+    \begin{subfigure}[t]{0.23\linewidth}
+		\centering
+	\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/aes_1_layer_mse_results/composites/composite_image_456657.pdf}
+    \caption{}
+	\label{fig:color_map_e}
+	\end{subfigure}
+    \begin{subfigure}[t]{0.23\linewidth}
+		\centering
+	\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/aes_1_layer_mse_results/composites/composite_image_201032.pdf}
+    \caption{}
+	\label{fig:color_map_f}
+	\end{subfigure}
+    \begin{subfigure}[t]{0.23\linewidth}
+		\centering
+	\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/aes_1_layer_mse_results/composites/composite_image_514283.pdf}
+    \caption{}
+	\label{fig:color_map_g}
+	\end{subfigure}
+    \begin{subfigure}[t]{0.23\linewidth}
+		\centering
+	\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/aes_1_layer_mse_results/composites/composite_image_2479133.pdf}
+    \caption{}
+	\label{fig:color_map_h}
+	\end{subfigure}
+	\caption{(a) True color image of the study area in 2017 and composites images generated by combining three random representations per map (b) 9-64-30, (c) 59-84-81, (d) 30-11-141, (e) 45-66-57, (f) 20-10-32, (g) 5-142-83 and (h) 24-79-133.}
 	\label{color_maps}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs0.pdf}
-	\caption{}
-	\label{fig:r_aes_b2_0}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-	  \includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs1.pdf}
-	\caption{}
-	\label{fig:r_aes_b2_1}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs2.pdf}
-    \caption{}
-	\label{fig:r_aes_b2_2}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs3.pdf}
-    \caption{}
-	\label{fig:r_aes_b2_3}
-	\end{subfigure}\\[0.2cm]
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs4.pdf}
-	 \caption{}
-	\label{fig:r_aes_b2_4}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs5.pdf}
-    \caption{}
-	\label{fig:r_aes_b2_5}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs6.pdf}
-	\caption{}
-	\label{fig:r_aes_b2_6}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.23\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs7.pdf}
-	\caption{}
-	\label{fig:r_aes_b2_7}
-	\end{subfigure}
-	\caption{Visualization of a subset of the representation bands produced by our RL AE-based framework. We show here only 8 out of $9 \times 15$ available representations.}
-	\label{representations}
-\end{figure}
+% \begin{figure}[H]
+% 	\centering
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs0.pdf}
+% 	\caption{}
+% 	\label{fig:r_aes_b2_0}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 	  \includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs1.pdf}
+% 	\caption{}
+% 	\label{fig:r_aes_b2_1}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs2.pdf}
+%     \caption{}
+% 	\label{fig:r_aes_b2_2}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs3.pdf}
+%     \caption{}
+% 	\label{fig:r_aes_b2_3}
+% 	\end{subfigure}\\[0.2cm]
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs4.pdf}
+% 	 \caption{}
+% 	\label{fig:r_aes_b2_4}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs5.pdf}
+%     \caption{}
+% 	\label{fig:r_aes_b2_5}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs6.pdf}
+% 	\caption{}
+% 	\label{fig:r_aes_b2_6}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.23\linewidth}
+% 		\centering
+% 		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/reconstruction_errors/reconstruction_B2_AEs7.pdf}
+% 	\caption{}
+% 	\label{fig:r_aes_b2_7}
+% 	\end{subfigure}
+% 	\caption{Visualization of a subset of the representation bands produced by our RL AE-based framework. We show here only 8 out of $9 \times 15$ available representations.}
+% 	\label{representations}
+% \end{figure}
 
 % \begin{figure}[H]
 % 	\centering
@@ -1023,53 +1216,65 @@ The false color images generated by combining three random representations bands
 % 	\label{color_maps}
 % \end{figure}
 
-The classification map produced by the trained classification FCN, with the representations as input data, is presented in Figure \ref{fig:maps} together with the ground truth.
-% The corresponding ground truth is shown in Figure \ref{fig:frh04_labels}. 
-% We can mostly observe classification errors in classes, such as barley, wheat and rapeesed, since the similarity in the spectral-temporal characteristics is narrow. %\textcolor{orange}{\textbf{By increasing the spectral and temporal resolution, the overlap can potentially be reduced}}.\\
-While the spatial distribution of some classes seems well captured, a number of classes are only poorly mapped.
-%\textcolor{orange}{we only have the half of temporal observations}
+% A classification map produced by the trained classification FCN, with the representations as input data, is presented in Figure \ref{fig:classification_pixel_level} together with the ground truth \ref{fig:frh04_labels}. In addition, a field-wise classification was performed by assigning to each field polygon the mode of the predicted class for pixels within the polygon. Field-based classification map is shown in Figure \ref{fig:classification_map_field}.\\
+
+A classification map produced by our method is presented in Figure \ref{fig:maps}. 
+Figure \ref{fig:classification_pixel_level} illustrates a pixel-based classification, i.e., without considering field boundaries or spatial context. Misclassifications are mainly seen  near field edges, since these are not pure pixels and often contain mixed spectral data. 
+
+To better illustrate the potential of our method in real-world activities, Figure \ref{fig:classification_map_field} presents a field-based classification map, where the output of our method is post-processed to group the pixel-wise predictions into polygon-level prediction by computing the mode of predictions within the field borders. This map preserves field structure, creating a more coherent and interpretable map. The strong similarity between Figures \ref{fig:frh04_labels} and \ref{fig:classification_map_field} show that the representations are sufficiently representative for crop type classification.
+
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[t]{0.3\linewidth}
-		\centering
-		\includegraphics[height=\linewidth,width=0.95\linewidth]{figures/frh04_clip.png}
+	\centering
+	\includegraphics[height=\linewidth]{figures/aes_1_layer_mse_results/classification_maps/labels.pdf}
 	\caption{}
 	\label{fig:frh04_labels}
-	\end{subfigure}\hspace{1cm}
-	% \begin{subfigure}[t]{0.3\linewidth}
-	%   \includegraphics[width=\linewidth]{figures/classification_clip.png}
-	% \caption{}
-	% \label{fig:classification_map}
-	% \end{subfigure}
-	\begin{subfigure}[t]{0.5\linewidth}
-		\centering
-		\includegraphics[height=0.6\linewidth,width=0.85\linewidth]{figures/classification_2017_2018_with_labels_2.pdf}
+	\end{subfigure}\hspace{-1.5mm}
+	\begin{subfigure}[t]{0.3\linewidth}
+	  \includegraphics[height=\linewidth]{figures/aes_1_layer_mse_results/classification_maps/prediction_pixel_level.pdf}
+	\caption{}
+	\label{fig:classification_pixel_level}
+	\end{subfigure}\hspace{-6.5mm} 
+	\begin{subfigure}[t]{0.3\linewidth}
+	\centering
+    \includegraphics[height=\linewidth]{figures/aes_1_layer_mse_results/classification_maps/prediction_polygon_base_with_labels.png}
 	  \caption{}
-	  \label{fig:classification_map}
+	  \label{fig:classification_map_field}
 	\end{subfigure}
-	\caption{(a) Study area ground truth at field level (polygons) and (b) representations-based FCN pixel-wise classification (raster).}
+	\caption{(a) Study area ground truth at field level (polygons), (b) representations-based fully connected network (FCN) pixel-wise classification (raster) and (c) representations-based FCN field-based classification (polygons).}
 	\label{fig:maps}
 \end{figure}
 
+As reported in the confusion matrix (Table \ref{confusion_matrix}), qualitative results illustrate that temporary meadow fields are frequently confused with permanent meadows. However, as discussed in subsection \ref{results_section}, these two crop type share similar spectral signatures, particularly when observed during different seasons of the year. This spectral overlap makes it challenging for classifiers to distinguish between these two crop types. 
+% A similar issue arises with barley and wheat fields, where misclassification occurs due to the crops belonging to the same family. Both barley and wheat have very similar growth patterns and spectral characteristics, making it difficult to differentiate between them, especially in certain phenological stages.
+
+% However, despite these specific challenges, the majority of crops were correctly classified using the representation-based methods.  
+
+% The corresponding ground truth is shown in Figure \ref{fig:frh04_labels}. 
+% We can mostly observe classification errors in classes, such as barley, wheat and rapeesed, since the similarity in the spectral-temporal characteristics is narrow. %\textcolor{orange}{\textbf{By increasing the spectral and temporal resolution, the overlap can potentially be reduced}}.\\
+% While the spatial distribution of some classes seems well captured, a number of classes are only poorly mapped.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Discussion}
-Our AEs-based methodology for representation learning (RL) addresses the problem of cloud-corrupted optical data by mapping RS spectral-temporal features into informative, and gap free representations.
+Our AEs-based methodology for RL addresses the problem of cloud-corrupted optical data by mapping RS spectral-temporal features into informative, and gap free representations.
 Our spectral and temporal-based approach produces pixel level comprehensive representations, avoiding the need to employ complex spatial-based classifiers.
 % This research presents specifically crop type classification task-guided representations, however, the extrapolation to other classification task is straightforward.
 
 The method proposed in this paper has as main advantage its ability to produce pixel-wise representations independently of the number of cloud free samples.
 Therefore, complex interpolation/gap filling methods, used in other approaches, are not needed.
 Other solutions, such as obtaining fixed-length time series matching with the input size of a neural network are not needed.
-However, as other methods, our approach is still negatively affected when limited cloud free temporal observations are available.
 
 % The dataset is imbalanced, making it challenging to achieve accurate results. 
 % We used the same regions for training, validation, and testing as in \cite{Russwurm2020}.
 
-Despite the shallowness of the neural networks used for both, representations learning as well as classification, our method performs satisfactory extracting meaningful information for downstream crop classification. 
-While other deep classification networks are capable of achieving higher OA scores, our light-weight model performs with similar quality.
+Despite the restricted depth of our method for both, representations learning process as well as classifier, our method performs satisfactory extracting meaningful information for downstream crop classification. 
+% While other deep classification networks are capable of achieving higher OA scores, our light-weight model performs with similar quality.
+While some deep classification networks attain slightly better OA scores, our lightweight model performs similarly with substantially less complexity. Furthermore, as compared to traditional classifiers, using representations instead of Sentinel-2 data improves performance for all conventional models maintaining low computational load.
 
-Models such as TempCNN, OmniscCNN, LSTM, StarRNN, and Transformer, need to be executed on powerful equipment well-suited for handling complex models. In contrast, our full framework was easily launched on a significantly less powerful CPU. This showcases our method's efficiency and adaptability to lower-end hardware and/or scalability to large geographic areas.
-In terms of number of trainable parameters, convolutional and recurrent models require millions of parameters, which indicates their high computational demands. A shallow three layer FCN, such as the one tested in this paper, is significantly less computationally complex.
+Models, such as TempCNN, OmniscCNN, LSTM, StarRNN, and Transformer, need to be executed on powerful equipment well-suited for handling complex models. In contrast, our full framework was easily launched on a significantly less powerful CPU. This showcases our method's efficiency and adaptability to lower-end hardware and/or scalability to large geographic areas.
+In terms of number of trainable parameters, convolutional and recurrent models require millions of parameters, which indicates their high computational demands. 
+% A shallow three layer FCN, such as the one tested in this paper, is significantly less computationally complex.
 
 % The runtime (measured in iterations per second, lt/s) is another critical factor. FCN stands out with the fastest runtime of 0.75 lt/s, demonstrating its efficiency in processing data quickly. In comparison, more complex models like TempCNN and LSTM have runtimes of 1.25 lt/s and 1.16 lt/s, respectively, reflecting the trade-off between complexity and speed.
 
@@ -1077,8 +1282,8 @@ In terms of number of trainable parameters, convolutional and recurrent models r
 
 % In Figure \ref{confusion_matrix}, we can observe the samples that were successfully classified in each class, as well as the classes where the model misclassified samples. 
 The dataset used in the experiments of this work is particularly challenging, as sunflower, orchards, and nuts were not separable, mainly due to the limited number of labeled samples, which restricts our model from learning enough informative and significative representations before classification.
-However, there are no computational or data limitations to apply our approach on different areas and with datasets from other optical sensors, such as Landsat, and even from radar sensors.
-Although, this research presents specifically crop type classification task-guided representations, the extrapolation to other classification task is straightforward.
+As other methods, our approach is still negatively affected in classification performance when extraordinarily limited number of samples are available. However, there are no computational or data limitations to apply our approach on different areas, and a simple solution is to slightly expand labeled data collection, even using samples from other already labeled regions.
+In addition, out approach has no computational or data limitations to be executed on different areas and with other optical sensors datasets, such as Landsat, and even from radar sensors.
 
 % For the qualitative analysis, we utilize Sentinel-2 imagery from the same geographic region, which we access via the Google Earth Engine tool. This imagery allows us to generate detailed classification maps. Figure \ref{representations} illustrates the key differences between the various representations produced by AEs (AEs). These differences are crucial for understanding how each AE model generating the representations. Based on these representations, we can create color maps, as shown in Figure \ref{color_maps}. These maps display how different crop types are assigned similar colors, enabling us distinguishing between crop types.
 
@@ -1094,18 +1299,24 @@ Although, this research presents specifically crop type classification task-guid
 \section{Conclusions}
 Based on the results reported in this paper, we derive the following conclusions:
 \begin{enumerate}
-	\item Qualitative evaluation based on distance metrics demonstrate that the representations produced by our method accomplished the objective of mapping RS spectral-temporal data to a feature space where inter-class separability is higher than in the initial Sentinel 2 BOA time series.
-	\item Classification scores obtained by our method, in combination with the comparison of number of trainable parameters and execution time, demonstrate that our method, althought it is not the best classification, reaches competitve accuracy with much less computational load. Therefore, scalability to larger areas is feasible and not excesively time consuming.
+	\item Quantitative evaluation based on distance metrics  demonstrate that the representations produced by our method accomplished the objective of mapping RS spectral-temporal data to a feature space where inter-class separability is higher than in the initial Sentinel 2 BOA time series.
+    \item Classification scores achieved by our method, alongside the comparison of trainable parameters and execution time, highlight its efficiency. While our model delivers slightly lower OA compared to more complex methods, it outperforms conventional classifiers in terms of accuracy, all with significantly reduced computational load. This makes it highly scalable to larger areas without excessive time consumption, offering an effective balance between performance and efficiency.
+	% \item Classification scores obtained by our method, in combination with the comparison of number of trainable parameters and execution time, demonstrate that our method, althought it is not the best classification, reaches competitve accuracy with much less computational load. Therefore, scalability to larger areas is feasible and not excesively time consuming.
 	% \item The FCN model, while simpler and operating on less powerful hardware, delivers a strong performance across all metrics. It achieves a respectable OA of 0.74, an AA of 0.53, and an F1 score of 0.74, which are competitive, especially considering its minimal parameter count and fast runtime. This makes FCN a highly efficient and practical choice, particularly in scenarios where computational resources are limited. While more complex models like LSTM and Transformer perform better overall, FCN's efficiency and adaptability make it a viable alternative, balancing accuracy and resource usage effectively.
-	\item The confusion matrix, as well as the classification map provide valuable insights that our method in fact performs correctly on the majority of classes evaluated in this work, especially for those with sufficient training samples. However, the challenge of distinguishing between crops with similar spectral characteristics remains. Addressing this issue will be essential for improving the robustness and precision of crop classification models in future studies and will most probably involve the concurrent use of additional sensor modalities.
+	\item The confusion matrix, as well as the classification map provide valuable insights that our method in fact performs correctly on the majority of classes evaluated in this work, especially for those with sufficient training samples. 
+ % However, the challenge of distinguishing between crops with similar spectral characteristics remains. Addressing this issue will be essential for improving the robustness and precision of crop classification models in future studies and will most probably involve the concurrent use of additional sensor modalities.
 \end{enumerate}
+
+In summary, experimental results demonstrate that this work successfully introduce a novel \ac{RL} method for crop type classification and confirm the main novelties of our method: 1) \hl{scalability} to process large areas of interest, as it is often required in real-world activities, 2) \hl{input length flexibility and no reliance on gap filling methods or high quality cloud masks}, and 3) competitive trade-off between computational demands and classification performance. 
+% can be attributed to the higher separability between most crop classes in the feature space, allowing the classifiers to distinguish between different types of crops more effectively. The ability of these methods to capture and represent the differences between classes enhances their accuracy, making it easier for the classifiers to assign the correct crop label to the fields. In summary, although some confusion exists between closely related crops, the representation-based approaches generally provide robust and accurate classification, largely due to the distinct separability of most crop classes.
 
 \section{Open Issues}
 Outside the scope of this work, there are still some points to consider in future research:
 \begin{itemize}
 	\item Implementation of a fully unsupervised methodology for training autoencoders without relying on labeled data.
-	\item Evaluation of the proposed methodolgy on other optical sensors, radar sensors or combination of both data sources.
+	\item Evaluation of the proposed methodology on other optical sensors, radar sensors or combination of both data sources.
 	\item Fine-tuning the classification model to find a better balance between performance metrics and number of trainable parameters.
+    \item Although this research presents specifically crop type classification task-guided representations, the extrapolation to other classification task is straightforward.
 \end{itemize}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1174,21 +1385,27 @@ The following abbreviations are used in this manuscript:\\
 
 \noindent 
 \begin{tabular}{@{}ll}
-AA & Average accuracy\\
+% AA & Average accuracy\\
 AEs & Autoencoders\\
 ANN & Artificial neural networks\\
+AP & Average precision\\
 BOA & Bottom of atmosphere\\
-CH & Calinski Harabasz\\
-DBI & Davies Bouldin Index\\
-DOY & Day of the year\\
+CH & Calinski harabasz\\
+DBI & Davies bouldin index\\
+DOY & Day-of-year\\
 DT & Decission trees\\
+ED & Euclidean distance\\
 FCN & Fully connected network\\
 GEE & Google earth engine\\
-$\kappa$ & Cohen's kappa\\
+$\kappa$ & Cohen’s kappa coefficient\\
+KS & Kennard–Stone\\
 LSTM &  Long-short term memory\\
-MAE & Mean absolut error\\
+M & Manhattan distance\\
+%MAE & Mean absolut error\\
 MCC & Matthews correlation coefficient\\
+MD & Mahalanobis distance\\
 ML & Machine learning\\
+MSE & Mean square error\\
 OA & Overall accuracy\\
 PCA & Principal component analysis\\
 RF & Random forest\\
@@ -1196,10 +1413,11 @@ RL & Representation learning\\
 ROI & Region of interest\\
 RS & Remote sensing\\
 SS & Silhouette score\\
-STBT & Spectral-temporal Barlow twins\\
+STBT & Spectral-temporal barlow twins\\
 SVM & Support vector machine\\
 TOA & Top of atmosphere\\
 UA & User's accuracy\\
+XGBoost & Extreme gradient boosting \\
 % CSF & Contrastive Sensor Fusion\\
 % S2 & Sentinel 2\\
 % PA & Producers Accuracy\\
@@ -1254,7 +1472,43 @@ where $a$ is the mean distance between a sample and all other points in the same
     \begin{equation}
         DBI = \frac{1}{k} \sum_{i=1}^{k} max_{i \neq j} R_{ij}
     \end{equation}
-    where $s_{i}$ is the average distance between each point of cluser $i$ and the centroid of that cluser, $d_{ij}$ is the distance between cluser centroids $i$ and $j$. The score is between $0$ and $\infty$, and the values closer to zero indicate a better partition.\\
+    where $s_{i}$ is the average distance between each point of cluser $i$ and the centroid of that cluser, $d_{ij}$ is the distance between cluser centroids $i$ and $j$. The score is between $0$ and $\infty$, and the values closer to zero indicate a better separation.\\
+
+
+% For computing the Euclidean, Manhattan and Mahalanobis distances, it was necessary to reduce the dimensionality of our data to 3D. This was achieved using Principal Component Analysis (PCA). 
+% For $n$ clusters, the pair-wise distances matrix is represented by:
+% \begin{equation}
+% D =  
+% \begin{bmatrix}
+% d(C_{1}, C_{1}) & d(C_{1}, C_{2}) & \hdots & d(C_{1}, C_{n})\\
+% d(C_{2}, C_{1}) & d(C_{2}, C_{2}) & \hdots & d(C_{2}, C_{n}\\
+% \vdots           &  \vdots          & \ddots & \vdots\\
+% d(C_{n}, C_{1}) & d(C_{n}, C_{2}) & \hdots & d(C_{n}, C_{n})
+% \end{bmatrix}
+% \end{equation} 
+% and the overall distance presented in  Table \ref{distance_metrics_results} was simply computed by the median of all off-diagonal elements.
+
+% \textbf{Euclidean Distance}\\
+% \begin{equation}
+%     ED = d_{ij} = \| C_{i} - C_{j} \|_{2} = \sqrt{\sum_{n=1}^{dim} (C_{i}[n] - C_{j}[n])^2}
+% \end{equation}
+% where $\| \cdot \|_{2}$ represents the Euclidean (or $l_{2}$) norm, $dim$ denotes the dimensionality of the data and $n$ indexes over the dimensions of the centroids, each entry $d_ij$ represents the Euclidean distance (ED) between centroids $C_{i}$ and $C_{j}$, and the diagonal elements $d(C_{i},C_{i})= 0$ represent the distance of a cluster centroid to itself.\\
+
+% \textbf{Manhattan Distance}\\
+
+% The Manhattan distance (also known as $l_1$ distance) $d_{ij}$ between centroids $C_i$ and $C_j$ is given by:
+% \begin{equation}
+%    M = d_{ij} = \| C_{i} - C_{j} \|_{1} = \sum_{n=1}^{dim} \∣ C_{i}[n] - C_{j}[n] \∣
+% \end{equation}
+% where  $\| \cdot \|_{1}$ represents the Manhattan norm, $dim$ is the dimensionality of the data and $n$ indexes over the dimensions of the centroids.\\
+
+% \textbf{Mahalanobis Distance}\\
+
+% The Mahalanobis distance $d_{ij}$ between centroids $C_{i}$ and $C_{j}$ is given by:
+% \begin{equation}
+%    MD = d_{ij} = \sqrt{(C_{i} - C_{j})^{T_{\sum^{-1}}} (C_{i} - C_{j})}
+% \end{equation}
+% where $C_{i} - C_{j}$ represents the difference between the two centroid vectors, $\sum^{-1}$ denotes the inverse of the covariance matrix $\sum$, and $(C_{i} - C_{j})^{T_{\sum^{-1}}} (C_{i} - C_{j})$ is the quadratic form which accounts for the covariance structure of the data.
 
 \section[\appendixname~\thesection]{Classification metrics}\label{distance_m} 
 For evaluating the predictions obtained to the FCN, we consider to compute the same metrics that the authors in \cite{Russwurm2020} used for comparative purposes of this work. We compute through of the confussion matrix the equations shown follow:\\
@@ -1271,10 +1525,10 @@ From $\mathbf{M}$ to a class-wise confusion matrix following the approach one ve
 	PA_c = \frac{TP_c}{TP_c + FP_c}
 \end{equation}
 where $TP_c$ is the true positive and $FP_c$ is the false positive of the class $c$. \\
-Then, the AA is computed as follows
+Then, the $AP$ is computed as follows
 \begin{equation}
 	\label{eqn:AA}
-	AA = \frac{\sum_{c=1}^{C} PA_c}{C}
+	AP = \frac{\sum_{c=1}^{C} PA_c}{C}
 \end{equation}
 The user's accuracy ($UA_c$) also known as recall is compute as follows
 \begin{equation}
@@ -1287,13 +1541,17 @@ With the equation \ref{eqn:PA_c} and \ref{eqn:UA_c} we can compute the Weighted 
 	\label{eqn:F1_c}
 	F1_c = 2 \frac{PA_c \times UA_c}{PA_c + UA_c}
 \end{equation}
-The formula for Cohen's kappa ($k$) is the probability of agreement minus the probability of random agreement, divided by one minus the probability of random agreement.\\
+The formula for Cohen’s kappa coefficient ($\kappa$) is the probability of agreement minus the probability of random agreement, divided by one minus the probability of random agreement.\\
 \begin{equation}
 	\label{eqn:k}
-	k= \frac{p_o - p_e}{1 - p_e}
+	\kappa= \frac{p_o - p_e}{1 - p_e}
 \end{equation}
-where $p_o$ is is the relative observed agreement among raters, and $p_e$ is the hypothetical probability of chance agreement.
-
+where $p_o$ is is the relative observed agreement among raters, and $p_e$ is the hypothetical probability of chance agreement.\\
+The multiclass Matthew's correlation coefficient (MCC) is defined by
+\begin{equation}
+    MCC = \frac{cp \times s - \sum^{C}_{c} p_{c} \times t_{c} }{\sqrt{( s^{2} - \sum^{C}_{c} p^{2}_{c}) \times (s^{2} - \sum^{C}_{c} t^{2}_{c})}}
+\end{equation}
+where $t_{c} = \sum^{C}_{i} \mathbf{M}_{ic}$ represents the number of times that class $c$ really happened., $p_{c} = \sum^{C}_{i} \mathbf{M}_{ci}$ denotes the number of times class $c$ has been predicted , $cp = \sum^{C}_{c} \mathbf{M}_{cc}$ indicates the number of samples that have been correctly predicted and $s= \sum^{C}_{i} \sum^{C}_{j} \mathbf{M}_{ij}$ is the overall number of samples.
 % \subsection[\appendixname~\thesubsection]{}
 
 % \begin{table}[H] 
